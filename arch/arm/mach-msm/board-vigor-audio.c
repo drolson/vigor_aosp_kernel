@@ -304,7 +304,7 @@ int vigor_support_beats(void)
 {
 	/* HW revision support 1V output from headset */
 	if (get_engineerid() > 2)
-		return 1;
+		return 0;
 	else
 		return 0;
 }

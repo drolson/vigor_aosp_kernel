@@ -560,15 +560,15 @@ static struct msm_panel_common_pdata mdp_pdata = {
 };
 
 /* parameters for backlight value mapping */
-#define BACKLIGHT_MAX 240
+#define BACKLIGHT_MAX 255
 
-#define ORIG_PWM_MAX 240
-#define ORIG_PWM_DEF 120
-#define ORIG_PWM_MIN 20
+#define ORIG_PWM_MAX 255
+#define ORIG_PWM_DEF 143
+#define ORIG_PWM_MIN 30
 
-#define MAP_PWM_MAX	230
-#define MAP_PWM_DEF 	100
-#define MAP_PWM_MIN	5
+#define MAP_PWM_MAX	255
+#define MAP_PWM_DEF 	110
+#define MAP_PWM_MIN	7
 
 static unsigned char vigor_shrink_pwm(int val)
 {
