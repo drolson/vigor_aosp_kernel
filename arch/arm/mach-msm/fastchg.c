@@ -243,7 +243,7 @@ int force_fast_charge_init(void)
         current_charge_mode_retval = sysfs_create_group(force_fast_charge_kobj, &current_charge_mode_attr_group);
         if (force_fast_charge_retval && USB_peripheral_detected_retval && USB_porttype_detected_retval && is_fast_charge_forced_retval && current_charge_mode_retval)
                 kobject_put(force_fast_charge_kobj);
-        return (force_fast_charge_retval && USB_peripheral_detected_retval && USB_porttype_detected_retval && is_fast_charge_forced_retval && current_charge_mode_retval);
+        return (force_fast_charge_retval && USB_peripheral_detected_retval && USB_porttype_detected_retval && is_fast_charge_forced_retval && current_charge_mode_retval );
 }
 /* end sysfs interface */
 
