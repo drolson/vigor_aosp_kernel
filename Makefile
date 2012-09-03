@@ -1,6 +1,6 @@
 VERSION = 3
 PATCHLEVEL = 0
-SUBLEVEL = 26
+SUBLEVEL = 27
 EXTRAVERSION =
 NAME =ihatewebos.rez.jb.1.1
 
