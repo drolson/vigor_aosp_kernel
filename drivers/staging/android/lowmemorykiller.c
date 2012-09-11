@@ -37,6 +37,7 @@
 #include <linux/notifier.h>
 #include <linux/memory.h>
 #include <linux/memory_hotplug.h>
+#include <linux/compaction.h>
 
 #define DEBUG_LEVEL_DEATHPENDING 6
 
@@ -70,6 +71,7 @@ static int lowmem_minfile_size = 6;
 
 static struct task_struct *lowmem_deathpending;
 static unsigned long lowmem_deathpending_timeout;
+extern int compact_nodes(void);
 static uint32_t lowmem_check_filepages = 0;
 
 #define lowmem_print(level, x...)			\
@@ -283,6 +285,8 @@ static int lowmem_shrink(struct shrinker *s, struct shrink_control *sc)
 	lowmem_print(4, "lowmem_shrink %lu, %x, return %d\n",
 		     sc->nr_to_scan, sc->gfp_mask, rem);
 	read_unlock(&tasklist_lock);
+	if (selected)
+		compact_nodes();
 	return rem;
 }
 
