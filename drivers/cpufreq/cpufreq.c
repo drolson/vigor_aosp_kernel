@@ -589,6 +589,18 @@ static ssize_t show_bios_limit(struct cpufreq_policy *policy, char *buf)
 	return sprintf(buf, "%u\n", policy->cpuinfo.max_freq);
 }
 
+/**
+ * set_scaling_max - change max freq with variables provided
+ */
+ssize_t set_scaling_max(unsigned int new_max, int cpu)
+{
+        struct cpufreq_policy *policy = cpufreq_cpu_get(cpu);
+        char new_max_string[9] = "";
+
+        sprintf(new_max_string, "%d", new_max);
+        return store_scaling_max_freq(policy, new_max_string, 0);
+}
+
 #ifdef CONFIG_VDD_USERSPACE
 extern ssize_t acpuclk_get_vdd_levels_str(char *buf);
 static ssize_t show_vdd_levels(struct cpufreq_policy *policy, char *buf)
@@ -1314,8 +1326,8 @@ static void cpufreq_out_of_sync(unsigned int cpu, unsigned int old_freq,
 	cpufreq_notify_transition(&freqs, CPUFREQ_POSTCHANGE);
 }
 
-
-/**
+ /**
+ *cpufreq_quick_get - get the CPU frequency (in kHz) from policy->cur
  * cpufreq_quick_get - get the CPU frequency (in kHz) from policy->cur
  * @cpu: CPU number
  *
@@ -1359,6 +1371,7 @@ static unsigned int __cpufreq_get(unsigned int cpu)
 
 	return ret_freq;
 }
+
 
 /**
  * cpufreq_get - get the current CPU frequency (in kHz)
