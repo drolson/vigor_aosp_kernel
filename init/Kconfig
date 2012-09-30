@@ -929,6 +929,9 @@ config CC_OPTIMIZE_FAST
 	   Enabling this option will pass "-Ofast" instead of "-Os" or "-O2" or "-O3" to gcc
 	   resulting in a large sized kernel, speed optimized.
 
+config CC_OPTIMIZE_FAST
+	bool "Use -Ofast"
+
 endchoice
 
 config SYSCTL
