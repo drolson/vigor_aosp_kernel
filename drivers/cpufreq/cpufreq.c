@@ -575,6 +575,52 @@ static ssize_t show_bios_limit(struct cpufreq_policy *policy, char *buf)
 	return sprintf(buf, "%u\n", policy->cpuinfo.max_freq);
 }
 
+/*drolson*/
+#ifdef CONFIG_CPU_VOLTAGE_TABLE
+
+ssize_t acpuclk_get_vdd_levels_str(char *buf) {
+
+  int i, len = 0;
+
+  if (buf) {
+    mutex_lock(&drv_state.lock);
+
+    for (i = 0; acpu_freq_tbl[i].acpuclk_khz; i++) {
+      /* updated to use uv required by 8x60 architecture - faux123 */
+      len += sprintf(buf + len, "%8u: %8d\n", acpu_freq_tbl[i].acpuclk_khz, acpu_freq_tbl[i].vdd_sc );
+    }
+
+    mutex_unlock(&drv_state.lock);
+  }
+  return len;
+}
+
+/* updated to use uv required by 8x60 architecture - faux123 */
+void acpuclk_set_vdd(unsigned int khz, int vdd_uv) {
+
+  int i;
+  unsigned int new_vdd_uv;
+//  int vdd_uv;
+
+//  vdd_uv = vdd_mv * 1000;
+
+  mutex_lock(&drv_state.lock);
+
+  for (i = 0; acpu_freq_tbl[i].acpuclk_khz; i++) {
+    if (khz == 0)
+      new_vdd_uv = min(max((acpu_freq_tbl[i].vdd_sc + vdd_uv), (unsigned int)MIN_VDD_SC), (unsigned int)MAX_VDD_SC);
+    else if ( acpu_freq_tbl[i].acpuclk_khz == khz)
+      new_vdd_uv = min(max((unsigned int)vdd_uv, (unsigned int)MIN_VDD_SC), (unsigned int)MAX_VDD_SC);
+    else 
+      continue;
+
+    acpu_freq_tbl[i].vdd_sc = new_vdd_uv;
+  }
+
+  mutex_unlock(&drv_state.lock);
+}
+#endif  /* CONFIG_CPU_VOTALGE_TABLE */
+
 cpufreq_freq_attr_ro_perm(cpuinfo_cur_freq, 0400);
 cpufreq_freq_attr_ro(cpuinfo_min_freq);
 cpufreq_freq_attr_ro(cpuinfo_max_freq);
@@ -590,6 +636,11 @@ cpufreq_freq_attr_rw(scaling_max_freq);
 cpufreq_freq_attr_rw(scaling_governor);
 cpufreq_freq_attr_rw(scaling_setspeed);
 
+/*drolson*/
+#ifdef CONFIG_CPU_VOLTAGE_TABLE
+define_one_global_rw(vdd_levels);
+#endif
+
 static struct attribute *default_attrs[] = {
 	&cpuinfo_min_freq.attr,
 	&cpuinfo_max_freq.attr,
@@ -604,6 +655,19 @@ static struct attribute *default_attrs[] = {
 	&scaling_setspeed.attr,
 	NULL
 };
+
+/*drolson*/
+#ifdef CONFIG_CPU_VOLTAGE_TABLE
+static struct attribute *vddtbl_attrs[] = {
+	&vdd_levels.attr,
+	NULL
+};
+
+static struct attribute_group vddtbl_attr_group = {
+	.attrs = vddtbl_attrs,
+	.name = "vdd_table",
+};
+#endif	/* CONFIG_CPU_VOLTAGE_TABLE */
 
 struct kobject *cpufreq_global_kobject;
 EXPORT_SYMBOL(cpufreq_global_kobject);
@@ -1919,6 +1983,11 @@ static int __init cpufreq_core_init(void)
 						&cpu_sysdev_class.kset.kobj);
 	BUG_ON(!cpufreq_global_kobject);
 	register_syscore_ops(&cpufreq_syscore_ops);
+
+	/*drolson*/ 
+	#ifdef CONFIG_CPU_VOLTAGE_TABLE
+	  sysfs_create_group(cpufreq_global_kobject, &vddtbl_attr_group);
+	#endif  /* CONFIG_CPU_VOLTAGE_TABLE */
 
 	return 0;
 }
