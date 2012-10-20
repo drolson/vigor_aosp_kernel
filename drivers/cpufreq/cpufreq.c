@@ -578,48 +578,65 @@ static ssize_t show_bios_limit(struct cpufreq_policy *policy, char *buf)
 /*drolson*/
 #ifdef CONFIG_CPU_VOLTAGE_TABLE
 
-ssize_t acpuclk_get_vdd_levels_str(char *buf) {
+extern ssize_t acpuclk_get_vdd_levels_str(char *buf);
+extern void acpuclk_set_vdd(unsigned acpu_khz, int vdd);
 
-  int i, len = 0;
-
-  if (buf) {
-    mutex_lock(&drv_state.lock);
-
-    for (i = 0; acpu_freq_tbl[i].acpuclk_khz; i++) {
-      /* updated to use uv required by 8x60 architecture - faux123 */
-      len += sprintf(buf + len, "%8u: %8d\n", acpu_freq_tbl[i].acpuclk_khz, acpu_freq_tbl[i].vdd_sc );
-    }
-
-    mutex_unlock(&drv_state.lock);
-  }
-  return len;
+static ssize_t show_vdd_levels(struct kobject *a, struct attribute *b, char *buf) {
+	return acpuclk_get_vdd_levels_str(buf);
 }
 
-/* updated to use uv required by 8x60 architecture - faux123 */
-void acpuclk_set_vdd(unsigned int khz, int vdd_uv) {
+static ssize_t store_vdd_levels(struct kobject *a, struct attribute *b, const char *buf, size_t count) {
 
-  int i;
-  unsigned int new_vdd_uv;
-//  int vdd_uv;
+	int i = 0, j;
+	int pair[2] = { 0, 0 };
+	int sign = 0;
 
-//  vdd_uv = vdd_mv * 1000;
+	if (count < 1)
+		return 0;
 
-  mutex_lock(&drv_state.lock);
+	if (buf[0] == '-') {
+		sign = -1;
+		i++;
+	}
+	else if (buf[0] == '+') {
+		sign = 1;
+		i++;
+	}
 
-  for (i = 0; acpu_freq_tbl[i].acpuclk_khz; i++) {
-    if (khz == 0)
-      new_vdd_uv = min(max((acpu_freq_tbl[i].vdd_sc + vdd_uv), (unsigned int)MIN_VDD_SC), (unsigned int)MAX_VDD_SC);
-    else if ( acpu_freq_tbl[i].acpuclk_khz == khz)
-      new_vdd_uv = min(max((unsigned int)vdd_uv, (unsigned int)MIN_VDD_SC), (unsigned int)MAX_VDD_SC);
-    else 
-      continue;
+	for (j = 0; i < count; i++) {
 
-    acpu_freq_tbl[i].vdd_sc = new_vdd_uv;
-  }
+		char c = buf[i];
 
-  mutex_unlock(&drv_state.lock);
+		if ((c >= '0') && (c <= '9')) {
+			pair[j] *= 10;
+			pair[j] += (c - '0');
+		}
+		else if ((c == ' ') || (c == '\t')) {
+			if (pair[j] != 0) {
+				j++;
+
+				if ((sign != 0) || (j > 1))
+					break;
+			}
+		}
+		else
+			break;
+	}
+
+	if (sign != 0) {
+		if (pair[0] > 0)
+			acpuclk_set_vdd(0, sign * pair[0]);
+	}
+	else {
+		if ((pair[0] > 0) && (pair[1] > 0))
+			acpuclk_set_vdd((unsigned)pair[0], pair[1]);
+		else
+			return -EINVAL;
+	}
+	return count;
 }
-#endif  /* CONFIG_CPU_VOTALGE_TABLE */
+
+#endif	/* CONFIG_CPU_VOLTAGE_TABLE */
 
 cpufreq_freq_attr_ro_perm(cpuinfo_cur_freq, 0400);
 cpufreq_freq_attr_ro(cpuinfo_min_freq);
@@ -1986,7 +2003,7 @@ static int __init cpufreq_core_init(void)
 
 	/*drolson*/ 
 	#ifdef CONFIG_CPU_VOLTAGE_TABLE
-	  sysfs_create_group(cpufreq_global_kobject, &vddtbl_attr_group);
+	sysfs_create_group(cpufreq_global_kobject, &vddtbl_attr_group);
 	#endif  /* CONFIG_CPU_VOLTAGE_TABLE */
 
 	return 0;
