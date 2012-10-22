@@ -1528,10 +1528,12 @@ config MSM_MPDEC
 	help
 	  This enables kernel based multi core control.
 	  (up/down hotplug based on load)
-# drolson
+
 config CPU_VOLTAGE_TABLE
 	bool "Enable CPU Voltage Table via sysfs for adjustements"
 	default n
+	help
+	  This should allow SVS via sysfs interface
 
 if CPU_FREQ_MSM
 
