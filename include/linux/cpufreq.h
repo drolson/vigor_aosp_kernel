@@ -23,6 +23,7 @@
 #include <asm/div64.h>
 
 #define CPUFREQ_NAME_LEN 16
+
 #ifdef CONFIG_MSM_MPDEC
 extern uint32_t acpu_check_khz_value(unsigned long khz);
 
