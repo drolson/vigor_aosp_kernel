@@ -47,7 +47,7 @@
 
 #define MAX_VDD_SC		1250000 /* uV */
 /*drolson*/
-#define MIN_VDD_SC		 737500 /* uV */
+#define MIN_VDD_SC		 650000 /* uV */
 #define MAX_VDD_MEM		1250000 /* uV */
 #define MAX_VDD_DIG		1200000 /* uV */
 #define MAX_AXI			 310500 /* KHz */
