@@ -1990,7 +1990,7 @@ EXPORT_SYMBOL_GPL(cpufreq_unregister_driver);
 static int __init cpufreq_core_init(void)
 {
 	int cpu;
-
+	int rc;
 	for_each_possible_cpu(cpu) {
 		per_cpu(cpufreq_policy_cpu, cpu) = -1;
 		init_rwsem(&per_cpu(cpu_policy_rwsem, cpu));
@@ -2003,9 +2003,9 @@ static int __init cpufreq_core_init(void)
 
 	/*drolson*/ 
 	#ifdef CONFIG_CPU_VOLTAGE_TABLE
-	sysfs_create_group(cpufreq_global_kobject, &vddtbl_attr_group);
+	rc = sysfs_create_group(cpufreq_global_kobject, &vddtbl_attr_group);
 	#endif  /* CONFIG_CPU_VOLTAGE_TABLE */
 
-	return 0;
+	return rc;
 }
 core_initcall(cpufreq_core_init);
