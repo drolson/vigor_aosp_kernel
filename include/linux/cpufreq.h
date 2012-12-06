@@ -363,18 +363,9 @@ extern struct cpufreq_governor cpufreq_gov_conservative;
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_INTERACTIVE)
 extern struct cpufreq_governor cpufreq_gov_interactive;
 #define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_interactive)
-<<<<<<< HEAD
-=======
-#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_WHEATLEY)
-extern struct cpufreq_governor cpufreq_gov_wheatley;
-#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_wheatley)
-#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_LAGFREE)
-extern struct cpufreq_governor cpufreq_gov_lagfree;
-#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_lagfree)
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_LAZY)
 extern struct cpufreq_governor cpufreq_gov_lazy;
 #define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_lazy)
->>>>>>> c3b5f01... Added Lazy Governor
 #endif
 
 
