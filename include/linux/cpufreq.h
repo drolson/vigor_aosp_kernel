@@ -389,6 +389,7 @@ extern struct cpufreq_governor cpufreq_gov_savagedzen;
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_INTELLIDEMAND)
 extern struct cpufreq_governor cpufreq_gov_intellidemand;
 #define CPUFREQ_DEFAULT_GOVERNOR        (&cpufreq_gov_intellidemand)
+<<<<<<< HEAD
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_BADASS)
 extern struct cpufreq_governor cpufreq_gov_badass;
 #define CPUFREQ_DEFAULT_GOVERNOR  (&cpufreq_gov_badass)
@@ -413,6 +414,14 @@ extern struct cpufreq_governor cpufreq_gov_asswax;
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_VIRTUOUS)
 extern struct cpufreq_governor cpufreq_gov_virtuous;
 #define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_virtuous)
+=======
+#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_SMARTASS2)
+extern struct cpufreq_governor cpufreq_gov_smartass2;
+#define CPUFREQ_DEFAULT_GOVERNOR        (&cpufreq_gov_smartass2)
+#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_DANCEDANCE)
+extern struct cpufreq_governor cpufreq_gov_dancedance;
+#define CPUFREQ_DEFAULT_GOVERNOR        (&cpufreq_gov_dancedance)
+>>>>>>> 55420ed... Dancedance governor
 #endif
 
 
