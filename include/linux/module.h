@@ -16,7 +16,6 @@
 #include <linux/kobject.h>
 #include <linux/moduleparam.h>
 #include <linux/tracepoint.h>
-#include <linux/export.h>
 
 #include <linux/percpu.h>
 #include <asm/module.h>
@@ -34,6 +33,12 @@
 #endif
 
 #define MODULE_NAME_LEN MAX_PARAM_PREFIX_LEN
+
+struct kernel_symbol
+{
+	unsigned long value;
+	const char *name;
+};
 
 struct modversion_info
 {
@@ -572,10 +577,6 @@ int register_module_notifier(struct notifier_block * nb);
 int unregister_module_notifier(struct notifier_block * nb);
 
 extern void print_modules(void);
-
-#ifdef CONFIG_WIMAX
-extern bool find_wimax_modules(void);
-#endif
 
 extern void module_update_tracepoints(void);
 extern int module_get_iter_tracepoints(struct tracepoint_iter *iter);
