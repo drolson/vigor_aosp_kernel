@@ -1,10 +1,6 @@
 #
 # Automatically generated make config: don't edit
-<<<<<<< HEAD:arch/arm/configs/vigor_aosp_defconfig
 # Linux/arm 3.0.16 Kernel Configuration
-=======
-# Linux/arm 3.0.44 Kernel Configuration
->>>>>>> 69e302b... Added frontswap_by_Dan:.config
 #
 CONFIG_ARM=y
 CONFIG_SYS_SUPPORTS_APM_EMULATION=y
@@ -538,7 +534,6 @@ CONFIG_CPU_HAS_PMU=y
 # CONFIG_ARM_ERRATA_754322 is not set
 # CONFIG_ARM_ERRATA_754327 is not set
 # CONFIG_KSAPI is not set
-# CONFIG_ARM_ERRATA_764369 is not set
 CONFIG_ARM_GIC=y
 # CONFIG_FIQ_DEBUGGER is not set
 
@@ -595,12 +590,7 @@ CONFIG_BOUNCE=y
 CONFIG_VIRT_TO_BUS=y
 # CONFIG_KSM is not set
 CONFIG_DEFAULT_MMAP_MIN_ADDR=4096
-<<<<<<< HEAD:arch/arm/configs/vigor_aosp_defconfig
 # CONFIG_CLEANCACHE is not set
-=======
-CONFIG_CLEANCACHE=y
-CONFIG_FRONTSWAP=y
->>>>>>> 69e302b... Added frontswap_by_Dan:.config
 # CONFIG_ARCH_ENABLE_MEMORY_HOTPLUG is not set
 # CONFIG_ARCH_ENABLE_MEMORY_HOTREMOVE is not set
 CONFIG_FORCE_MAX_ZONEORDER=11
