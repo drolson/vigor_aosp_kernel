@@ -714,11 +714,7 @@ static int compact_node(int nid)
 }
 
 /* Compact all nodes in the system */
-<<<<<<< HEAD
-int compact_nodes(void)
-=======
 static void compact_nodes(void)
->>>>>>> 13d4d4c... Linux 3.0.59
 {
 	int nid;
 
