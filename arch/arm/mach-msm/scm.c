@@ -210,11 +210,7 @@ static u32 smc(u32 cmd_addr)
 			__asmeq("%1", "r0")
 			__asmeq("%2", "r1")
 			__asmeq("%3", "r2")
-<<<<<<< HEAD
-#ifdef REQUIRES_SEC
-=======
 #if USE_ARCH_EXTENSION_SEC
->>>>>>> f90cf10... GCC Version Check Fix
 			".arch_extension sec\n"
 #endif
 			"smc	#0	@ switch to secure world\n"
@@ -338,11 +334,7 @@ s32 scm_call_atomic1(u32 svc, u32 cmd, u32 arg1)
 		__asmeq("%1", "r0")
 		__asmeq("%2", "r1")
 		__asmeq("%3", "r2")
-<<<<<<< HEAD
-#ifdef REQUIRES_SEC
-=======
 #if USE_ARCH_EXTENSION_SEC
->>>>>>> f90cf10... GCC Version Check Fix
 			".arch_extension sec\n"
 #endif
 		"smc	#0	@ switch to secure world\n"
@@ -377,11 +369,7 @@ s32 scm_call_atomic2(u32 svc, u32 cmd, u32 arg1, u32 arg2)
 		__asmeq("%2", "r1")
 		__asmeq("%3", "r2")
 		__asmeq("%4", "r3")
-<<<<<<< HEAD
-#ifdef REQUIRES_SEC
-=======
 #if USE_ARCH_EXTENSION_SEC
->>>>>>> f90cf10... GCC Version Check Fix
 			".arch_extension sec\n"
 #endif
 		"smc	#0	@ switch to secure world\n"
@@ -411,11 +399,7 @@ u32 scm_get_version(void)
 			__asmeq("%1", "r1")
 			__asmeq("%2", "r0")
 			__asmeq("%3", "r1")
-<<<<<<< HEAD
-#ifdef REQUIRES_SEC
-=======
 #if USE_ARCH_EXTENSION_SEC
->>>>>>> f90cf10... GCC Version Check Fix
 			".arch_extension sec\n"
 #endif
 			"smc	#0	@ switch to secure world\n"
