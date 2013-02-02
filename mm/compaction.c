@@ -741,11 +741,7 @@ int sysctl_compaction_handler(struct ctl_table *table, int write,
 			void __user *buffer, size_t *length, loff_t *ppos)
 {
 	if (write)
-<<<<<<< HEAD
-		compact_nodes();
-=======
 		return compact_nodes(true);
->>>>>>> e4ce74e... lowmemorykiller: Use asynchronous compaction
 
 	return 0;
 }
