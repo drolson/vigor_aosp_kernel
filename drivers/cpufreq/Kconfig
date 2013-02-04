@@ -382,8 +382,6 @@ config CPU_FREQ_GOV_LIONHEART
 	tristate "'Lionheart' cpufreq governor"
 	depends on CPU_FREQ
 
-	  If in doubt, say Y.
-
 config CPU_FREQ_GOV_SMARTASS2
 	tristate "'smartassV2' cpufreq governor"
 	depends on CPU_FREQ
