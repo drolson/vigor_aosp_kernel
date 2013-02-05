@@ -153,13 +153,6 @@ config CPU_FREQ_DEFAULT_GOV_SUPERBAD
 	help
 	  Use the CPUFreq governor 'superbad' as default.
 
-config CPU_FREQ_DEFAULT_GOV_VIRTUOUS
-	bool "virtuous"
-	select CPU_FREQ_GOV_VIRTUOUS
-	select CPU_FREQ_GOV_PERFORMANCE
-	help
-	  Use the CPUFreq governor 'virtuous' as default.
-
 config CPU_FREQ_DEFAULT_GOV_LAZY
 	bool "lazy"
 	select CPU_FREQ_GOV_LAZY
@@ -231,13 +224,6 @@ config CPU_FREQ_DEFAULT_GOV_WHEATLEY
 	  Use the CPUFreq governor 'wheatley' as default.	 
 
 endchoice
-
-config CPU_FREQ_GOV_VIRTUOUS
-	tristate "'virtuous' cpufreq governor"
-	depends on CPU_FREQ
-	help
-          'virtuous' - a "slightly more agressive smart" optimized governor!
- 	  If in doubt, say N.
 
 config CPU_FREQ_GOV_SUPERBAD
 	tristate "'superbad' cpufreq governor"
