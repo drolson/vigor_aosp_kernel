@@ -1,10 +1,6 @@
 #
 # Automatically generated make config: don't edit
-<<<<<<< HEAD
 # Linux/arm 3.0.62 Kernel Configuration
-=======
-# Linux/arm 3.0.16 Kernel Configuration
->>>>>>> parent of 709ec9f... Added frontswap_by_Dan
 #
 CONFIG_ARM=y
 CONFIG_SYS_SUPPORTS_APM_EMULATION=y
@@ -606,12 +602,7 @@ CONFIG_BOUNCE=y
 CONFIG_VIRT_TO_BUS=y
 # CONFIG_KSM is not set
 CONFIG_DEFAULT_MMAP_MIN_ADDR=4096
-<<<<<<< HEAD
-CONFIG_CLEANCACHE=y
-CONFIG_FRONTSWAP=y
-=======
 # CONFIG_CLEANCACHE is not set
->>>>>>> parent of 709ec9f... Added frontswap_by_Dan
 # CONFIG_ARCH_ENABLE_MEMORY_HOTPLUG is not set
 # CONFIG_ARCH_ENABLE_MEMORY_HOTREMOVE is not set
 CONFIG_FORCE_MAX_ZONEORDER=11
