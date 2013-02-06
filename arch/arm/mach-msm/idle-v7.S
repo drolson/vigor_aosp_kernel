@@ -101,6 +101,7 @@ ENTRY(msm_pm_collapse)
 	cmp	r1, #1
 	bne	skip
 	bl	v7_flush_dcache_all
+ 	b       skip2
 
 skip:	ldr	r0, =saved_state
 	ldr	r1, =saved_state_end
@@ -113,6 +114,7 @@ skip:	ldr	r0, =saved_state
 	mcr     p15, 0, r0, c1, c0, 0    /* disable d/i cache  */
 
 	dsb
+skip2:
 #ifdef CONFIG_ARCH_MSM_KRAIT
 	ldr	r0, =SCM_SVC_BOOT
 	ldr	r1, =SCM_CMD_TERMINATE_PC
