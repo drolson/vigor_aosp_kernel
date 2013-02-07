@@ -601,16 +601,17 @@ ssize_t set_scaling_max(unsigned int new_max, int cpu)
         return store_scaling_max_freq(policy, new_max_string, 0);
 }
 
-#ifdef CONFIG_VDD_USERSPACE
+#ifdef CONFIG_CPU_VOLTAGE_TABLE
+
 extern ssize_t acpuclk_get_vdd_levels_str(char *buf);
-static ssize_t show_vdd_levels(struct cpufreq_policy *policy, char *buf)
-{
+extern void acpuclk_set_vdd(unsigned acpu_khz, int vdd);
+
+static ssize_t show_vdd_levels(struct kobject *a, struct attribute *b, char *buf) {
 	return acpuclk_get_vdd_levels_str(buf);
 }
 
-extern void acpuclk_set_vdd(unsigned acpu_khz, int vdd);
-static ssize_t store_vdd_levels(struct cpufreq_policy *policy, const char *buf, size_t count)
-{
+static ssize_t store_vdd_levels(struct kobject *a, struct attribute *b, const char *buf, size_t count) {
+
 	int i = 0, j;
 	int pair[2] = { 0, 0 };
 	int sign = 0;
@@ -659,7 +660,8 @@ static ssize_t store_vdd_levels(struct cpufreq_policy *policy, const char *buf, 
 	}
 	return count;
 }
-#endif
+
+#endif	/* CONFIG_CPU_VOLTAGE_TABLE */
 
 cpufreq_freq_attr_ro_perm(cpuinfo_cur_freq, 0400);
 cpufreq_freq_attr_ro(cpuinfo_min_freq);
@@ -675,8 +677,8 @@ cpufreq_freq_attr_rw(scaling_min_freq);
 cpufreq_freq_attr_rw(scaling_max_freq);
 cpufreq_freq_attr_rw(scaling_governor);
 cpufreq_freq_attr_rw(scaling_setspeed);
-#ifdef CONFIG_VDD_USERSPACE
-cpufreq_freq_attr_rw(vdd_levels);
+#ifdef CONFIG_CPU_VOLTAGE_TABLE
+define_one_global_rw(vdd_levels);
 #endif
 
 static struct attribute *default_attrs[] = {
@@ -691,11 +693,20 @@ static struct attribute *default_attrs[] = {
 	&scaling_driver.attr,
 	&scaling_available_governors.attr,
 	&scaling_setspeed.attr,
-#ifdef CONFIG_VDD_USERSPACE
-&vdd_levels.attr,
-#endif
 	NULL
 };
+
+#ifdef CONFIG_CPU_VOLTAGE_TABLE
+static struct attribute *vddtbl_attrs[] = {
+	&vdd_levels.attr,
+	NULL
+};
+
+static struct attribute_group vddtbl_attr_group = {
+	.attrs = vddtbl_attrs,
+	.name = "vdd_table",
+};
+#endif	/* CONFIG_CPU_VOLTAGE_TABLE */
 
 struct kobject *cpufreq_global_kobject;
 EXPORT_SYMBOL(cpufreq_global_kobject);
@@ -2173,7 +2184,7 @@ EXPORT_SYMBOL_GPL(cpufreq_unregister_driver);
 
 static int __init cpufreq_core_init(void)
 {
-	int cpu;
+	int cpu, rc;
 
 	for_each_possible_cpu(cpu) {
 		per_cpu(cpufreq_policy_cpu, cpu) = -1;
@@ -2184,6 +2195,10 @@ static int __init cpufreq_core_init(void)
 						&cpu_sysdev_class.kset.kobj);
 	BUG_ON(!cpufreq_global_kobject);
 	register_syscore_ops(&cpufreq_syscore_ops);
+
+#ifdef CONFIG_CPU_VOLTAGE_TABLE
+	rc = sysfs_create_group(cpufreq_global_kobject, &vddtbl_attr_group);
+#endif	/* CONFIG_CPU_VOLTAGE_TABLE */
 
 	return 0;
 }

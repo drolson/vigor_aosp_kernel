@@ -14,8 +14,8 @@
 #ifndef AVS_H
 #define AVS_H
 
-#define VOLTAGE_MIN  CONFIG_CPU_FREQ_MIN_VDD /* mV */
-#define VOLTAGE_MAX  CONFIG_CPU_FREQ_MAX_VDD
+#define VOLTAGE_MIN  7000 /* mV */
+#define VOLTAGE_MAX  1450
 #define VOLTAGE_STEP 25
 
 
