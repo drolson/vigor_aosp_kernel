@@ -647,7 +647,7 @@ static long genlock_dev_ioctl(struct file *filep, unsigned int cmd,
 		return 0;
 	}
 	default:
-		GENLOCK_LOG_ERR("Invalid ioctl\n");
+		//GENLOCK_LOG_ERR("Invalid ioctl\n");
 		return -EINVAL;
 	}
 }

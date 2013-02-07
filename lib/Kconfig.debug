@@ -411,8 +411,6 @@ config SLUB_STATS
 	  out which slabs are relevant to a particular load.
 	  Try running: slabinfo -DA
 
-<<<<<<< HEAD
-=======
 config SLQB_DEBUG
 	default n
 	bool "Enable SLQB debugging support"
@@ -448,7 +446,6 @@ config DEBUG_FDLEAK_CRITERION
        Set this crierion value of fd numer per process, 1024 is the max fd number
        one process can open
 
->>>>>>> 9f6b374... Add SLQB Memory Allocator
 config DEBUG_KMEMLEAK
 	bool "Kernel memory leak detector"
 	depends on DEBUG_KERNEL && EXPERIMENTAL && \

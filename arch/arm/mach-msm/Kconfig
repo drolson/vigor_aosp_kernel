@@ -1522,38 +1522,32 @@ config MSM_DALRPC_TEST
 	  Exercises DAL RPC calls to QDSP6.
 
 config MSM_MPDEC
-	bool "Enable kernel based mpdecision"
-	depends on MSM_SMP
-	default n
-	help
-	  This enables kernel based multi core control.
-	  (up/down hotplug based on load)
-
-config CPU_VOLTAGE_TABLE
-	bool "Enable CPU Voltage Table via sysfs for adjustements"
-	default n
+    bool "Enable kernel based mpdecision"
+    depends on MSM_SMP
+    default n
+    help
+      This enables kernel based multi core control.
+      (up/down hotplug based on load)
 
 choice
-	prompt "MSM KGSL overclocking options"
-	default MSM_KGSL_GPUOC_STOCK
+    prompt "Default MPdecision setting"
+    help
+      This option sets the MPdecision startup settings.
+      If in doubt, select 'enabled'.
 
-config MSM_KGSL_GPUOC_STOCK
-	bool "GPU overclocking disabled. 3D@266 & 2D@200"
-        help
-          Clocks: 266Mhz max on the 3D core and 200Mhz max on the
-          2D core.
+config MSM_MPDEC_ENABLED
+    bool "enabled"
+    depends on MSM_MPDEC
+    help
+      Build MPdecision into kernel with full control over
+      multi processor decisions by default.
 
-config MSM_KGSL_GPUOC_NORM
-	bool "GPU norm overclocked: 3D@300 & 2D@228"
-        help
-          Clocks: 300Mhz max on the 3D core and 228Mhz max on the
-          2D core.
-
-config MSM_KGSL_GPUOC_MAX
-	bool "GPU max overclocked: 3D@320 & 2D@266"
-        help
-          Clocks: 320Mhz max on the 3D core and 266Mhz max on the
-          2D core and pushes the bandwidth of 2D & 3D.
+config MSM_MPDEC_DISABLED
+    bool "disabled"
+    depends on MSM_MPDEC
+    help
+      Build MPdecision into kernel with only control over
+      screen on/off multi processor decisions by default.
 
 endchoice
 
