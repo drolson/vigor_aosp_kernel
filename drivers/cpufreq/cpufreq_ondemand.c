@@ -31,13 +31,8 @@
  * It helps to keep variable names smaller, simpler
  */
 
-<<<<<<< HEAD
-#define DEF_FREQUENCY_DOWN_DIFFERENTIAL		(10)
-#define DEF_FREQUENCY_UP_THRESHOLD		(80)
-=======
 #define DEF_FREQUENCY_DOWN_DIFFERENTIAL		(26)
 #define DEF_FREQUENCY_UP_THRESHOLD		(63)
->>>>>>> 0c906b7... Implement ck1 patchset
 #define DEF_SAMPLING_DOWN_FACTOR		(1)
 #define MAX_SAMPLING_DOWN_FACTOR		(100000)
 #define MICRO_FREQUENCY_DOWN_DIFFERENTIAL	(3)
