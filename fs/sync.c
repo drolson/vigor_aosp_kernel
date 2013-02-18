@@ -21,8 +21,6 @@
 #define VALID_FLAGS (SYNC_FILE_RANGE_WAIT_BEFORE|SYNC_FILE_RANGE_WRITE| \
 			SYNC_FILE_RANGE_WAIT_AFTER)
 
-<<<<<<< HEAD
-=======
 #ifdef CONFIG_DYNAMIC_FSYNC
 extern bool early_suspend_active;
 #endif
@@ -31,7 +29,6 @@ extern bool early_suspend_active;
 extern bool fsynccontrol_fsync_enabled(void);
 #endif
 
->>>>>>> fad535c... fs/dyn_sync_cntrl: dynamic sync control
 /*
  * Do the filesystem syncing work. For simple filesystems
  * writeback_inodes_sb(sb) just dirties buffers with inodes so we have to
@@ -238,8 +235,6 @@ static int do_fsync(unsigned int fd, int datasync)
 
 SYSCALL_DEFINE1(fsync, unsigned int, fd)
 {
-<<<<<<< HEAD
-=======
 #ifdef CONFIG_DYNAMIC_FSYNC
 	if (!early_suspend_active)
 		return 0;
@@ -249,14 +244,12 @@ SYSCALL_DEFINE1(fsync, unsigned int, fd)
 	if (!fsynccontrol_fsync_enabled())
 		return 0;
 #endif
->>>>>>> fad535c... fs/dyn_sync_cntrl: dynamic sync control
+
 	return do_fsync(fd, 0);
 }
 
 SYSCALL_DEFINE1(fdatasync, unsigned int, fd)
 {
-<<<<<<< HEAD
-=======
 #ifdef CONFIG_DYNAMIC_FSYNC
 	if (!early_suspend_active)
 		return 0;
@@ -266,7 +259,6 @@ SYSCALL_DEFINE1(fdatasync, unsigned int, fd)
 	if (!fsynccontrol_fsync_enabled())
 		return 0;
 #endif
->>>>>>> fad535c... fs/dyn_sync_cntrl: dynamic sync control
 	return do_fsync(fd, 1);
 }
 
