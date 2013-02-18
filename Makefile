@@ -2,7 +2,7 @@ VERSION = 3
 PATCHLEVEL = 0
 SUBLEVEL = 65
 EXTRAVERSION =
-NAME =ihatewebos.rez.jb.1.1
+NAME =ihatewebos.rez.jb.2.3.5
 
 # *DOCUMENTATION*
 # To see a list of typical targets execute "make help"
