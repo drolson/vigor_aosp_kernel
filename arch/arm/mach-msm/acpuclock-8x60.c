@@ -910,7 +910,7 @@ uint32_t acpu_check_khz_value(unsigned long khz)
 {
 	struct clkctl_acpu_speed *f;
 
-	if (khz > 1944000)
+	if (khz > 1836000)
 		return CONFIG_MSM_CPU_FREQ_MAX;
 
 	if (khz < 192000)
@@ -1007,7 +1007,7 @@ int processor_name_read_proc(char *page, char **start, off_t off,
 {
 	char *p = page;
 
-	p += sprintf(p, "1.83 GHz dual-core");
+	p += sprintf(p, "1.8 GHz dual-core");
 
 	return p - page;
 }
