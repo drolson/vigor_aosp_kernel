@@ -10,7 +10,6 @@
 #include <linux/init.h>
 #include <linux/device.h>
 #include <linux/miscdevice.h>
-#include <linux/sound_control.h>
 
 #define SOUNDCONTROL_VERSION 1
 
@@ -43,7 +42,6 @@ static ssize_t soundcontrol_highperf_write(struct device * dev, struct device_at
 
 			high_perf_mode = true;
 
-			soundcontrol_updateperf(high_perf_mode);
 		    }
 		} 
 	    else if (data == 0) 
@@ -53,7 +51,6 @@ static ssize_t soundcontrol_highperf_write(struct device * dev, struct device_at
 
 			high_perf_mode = false;
 
-			soundcontrol_updateperf(high_perf_mode);
 		    }
 		} 
 	    else 
@@ -84,8 +81,6 @@ static ssize_t soundcontrol_volumeboost_write(struct device * dev, struct device
 		{
 		    if (data != volume_boost) {
 			volume_boost = data;
-
-			soundcontrol_updatevolume(volume_boost);
 
 			pr_info("SOUNDCONTROL volume boost set to %u\n", volume_boost); 
 		    }
