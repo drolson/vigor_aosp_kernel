@@ -884,13 +884,12 @@ static int twl6040_power_mode_event(struct snd_soc_dapm_widget *w,
 {
 	struct snd_soc_codec *codec = w->codec;
 	struct twl6040_data *priv = snd_soc_codec_get_drvdata(codec);
+	int ret = 0;
 
-<<<<<<< HEAD
-	if (SND_SOC_DAPM_EVENT_ON(event))
+	if (SND_SOC_DAPM_EVENT_ON(event)) {
 		priv->non_lp++;
 	else
 		priv->non_lp--;
-=======
 	if (SND_SOC_DAPM_EVENT_ON(event)) {
 		if (!strcmp(w->name, "Earphone Enable")) {
 		 /* Earphone doesn't support low power mode */
@@ -911,7 +910,6 @@ static int twl6040_power_mode_event(struct snd_soc_dapm_widget *w,
 #endif
 		}
 	}
->>>>>>> 371ed25... The headset power mode is kept on high-performance while no headset is
 
 	msleep(1);
 
@@ -1819,10 +1817,8 @@ static int twl6040_probe(struct snd_soc_codec *codec)
 	else
 		naudint = 0;
 
-<<<<<<< HEAD
 	priv->audpwron = audpwron;
 	priv->naudint = naudint;
-=======
 	/* default is low-power mode */
 #ifdef CONFIG_SOUND_CONTROL
 	priv->headset_mode = 0;
@@ -1830,7 +1826,6 @@ static int twl6040_probe(struct snd_soc_codec *codec)
 	priv->headset_mode = 1;
 #endif
 	priv->sysclk_constraints = &lp_constraints;
->>>>>>> 371ed25... The headset power mode is kept on high-performance while no headset is
 	priv->workqueue = create_singlethread_workqueue("twl6040-codec");
 
 	if (!priv->workqueue) {
