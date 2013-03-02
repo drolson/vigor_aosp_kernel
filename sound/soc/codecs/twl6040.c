@@ -333,16 +333,13 @@ static inline int twl6040_hs_ramp_step(struct snd_soc_codec *codec,
 				val = volume;
 #else
 		if (val < headset->left_vol) {
-<<<<<<< HEAD
 			val += left_step;
-=======
 			if (val + left_step > headset->left_vol)
 				val = headset->left_vol;
 #endif
 			else
 				val += left_step;
 
->>>>>>> 8c127ab... Added Sound Control version 1.
 			reg &= ~TWL6040_HSL_VOL_MASK;
 			twl6040_write(codec, TWL6040_REG_HSGAIN,
 					(reg | (~val & TWL6040_HSL_VOL_MASK)));
@@ -408,16 +405,12 @@ static inline int twl6040_hs_ramp_step(struct snd_soc_codec *codec,
 				val = volume;
 #else
 		if (val < headset->right_vol) {
-<<<<<<< HEAD
-			val += right_step;
-=======
 			if (val + right_step > headset->right_vol)
 				val = headset->right_vol;
 #endif
 			else
 				val += right_step;
 
->>>>>>> 8c127ab... Added Sound Control version 1.
 			reg &= ~TWL6040_HSR_VOL_MASK;
 			twl6040_write(codec, TWL6040_REG_HSGAIN,
 				(reg | (~val << TWL6040_HSR_VOL_SHIFT)));
@@ -699,14 +692,9 @@ static int pga_event(struct snd_soc_dapm_widget *w,
 
 		if (!delayed_work_pending(work)) {
 			/* use volume ramp for power-down */
-<<<<<<< HEAD
-			out->left_step = 1;
-			out->right_step = 1;
-=======
 #ifdef CONFIG_SOUND_CONTROL
 			out->ramp = TWL6040_RAMP_ZERO;
 #else
->>>>>>> 8c127ab... Added Sound Control version 1.
 			out->ramp = TWL6040_RAMP_DOWN;
 #endif
 			INIT_COMPLETION(out->ramp_done);
@@ -828,9 +816,6 @@ static int headset_power_mode(struct snd_soc_codec *codec, int high_perf)
 	return 0;
 }
 
-<<<<<<< HEAD
-static int twl6040_hs_dac_event(struct snd_soc_dapm_widget *w,
-=======
 #ifdef CONFIG_SOUND_CONTROL
 void soundcontrol_updatevolume(unsigned int volumeboost)
 {
@@ -866,7 +851,6 @@ EXPORT_SYMBOL(soundcontrol_updateperf);
 #endif
 
 static int twl6040_dac_event(struct snd_soc_dapm_widget *w,
->>>>>>> 8c127ab... Added Sound Control version 1.
 			struct snd_kcontrol *kcontrol, int event)
 {
 	msleep(1);

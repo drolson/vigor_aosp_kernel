@@ -52,9 +52,7 @@ obj-y				+= carma/
 obj-$(CONFIG_WL127X_RFKILL)	+= wl127x-rfkill.o
 obj-$(CONFIG_APANIC)		+= apanic.o
 obj-$(CONFIG_SENSORS_AK8975)	+= akm8975.o
-<<<<<<< HEAD
-obj-$(CONFIG_TSIF) += msm_tsif.o
-msm_tsif-objs := tsif.o
+obj-$(CONFIG_TSIF) 		+= msm_tsif.o
 obj-$(CONFIG_TSIF_CHRDEV) += tsif_chrdev.o
 obj-$(CONFIG_HAPTIC_ISA1200)		+= isa1200.o
 obj-$(CONFIG_PMIC8058_PWM) += pmic8058-pwm.o
@@ -72,7 +70,6 @@ obj-$(CONFIG_TZCOM) += tzcom.o
 obj-$(CONFIG_CABLE_DETECT_8X60) += cable_detect.o
 obj-$(CONFIG_CABLE_DETECT_8960) += cable_detect_8960.o
 obj-$(CONFIG_CABLE_DETECT_8X55) += cable_detect_8x55.o
-=======
 obj-y				+= inv_mpu/
 obj-$(CONFIG_SEC_MODEM)		+= modem_if/
 obj-$(CONFIG_USB_SWITCH_FSA9480)	+= fsa9480.o
@@ -82,4 +79,3 @@ obj-$(CONFIG_COLOR_CONTROL)	+= color_control.o
 obj-$(CONFIG_CUSTOM_VOLTAGE)	+= custom_voltage.o
 obj-$(CONFIG_BLX)    += blx.o
 obj-$(CONFIG_SOUND_CONTROL)	+= sound_control.o
->>>>>>> 8c127ab... Added Sound Control version 1.
