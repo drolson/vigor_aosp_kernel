@@ -13,9 +13,9 @@
 
 #define SOUNDCONTROL_VERSION 1
 
-static bool high_perf_mode = false;
+static bool high_perf_mode = true;
 
-static unsigned int volume_boost = 0;
+static unsigned int volume_boost = 1;
 
 #define MAX_VOLUMEBOOST 3
 
