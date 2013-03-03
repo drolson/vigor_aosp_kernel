@@ -35,7 +35,7 @@ struct afe_ctl {
 static struct afe_ctl this_afe;
 
 #define TIMEOUT_MS 1000
-#define Q6AFE_MAX_VOLUME 0x3FFF
+#define Q6AFE_MAX_VOLUME 0x4114
 
 
 static int32_t afe_callback(struct apr_client_data *data, void *priv)
