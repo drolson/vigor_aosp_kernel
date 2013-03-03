@@ -393,30 +393,33 @@ extern struct cpufreq_governor cpufreq_gov_intellidemand;
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_BADASS)
 extern struct cpufreq_governor cpufreq_gov_badass;
 #define CPUFREQ_DEFAULT_GOVERNOR  (&cpufreq_gov_badass)
-#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_INTERACTIVEX2)
-extern struct cpufreq_governor cpufreq_gov_interactivex2;
-#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_interactivex2)
-#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_NIGHTMARE)
-extern struct cpufreq_governor cpufreq_gov_nightmare;
-#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_nightmare)
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_SCARY)
 extern struct cpufreq_governor cpufreq_gov_scary;
 #define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_scary)
-#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_ABYSSPLUG)
-extern struct cpufreq_governor cpufreq_gov_abyssplug;
-#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_abyssplug)
-#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_SUPERBAD)
-extern struct cpufreq_governor cpufreq_gov_superbad;
-#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_superbad)
-#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_ASSWAX)
-extern struct cpufreq_governor cpufreq_gov_asswax;
-#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_asswax)
+#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_KING)
+extern struct cpufreq_governor cpufreq_gov_king;
+#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_king)
+#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_YODA)
+extern struct cpufreq_governor cpufreq_gov_yoda;
+#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_yoda)
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_SMARTASS2)
 extern struct cpufreq_governor cpufreq_gov_smartass2;
 #define CPUFREQ_DEFAULT_GOVERNOR        (&cpufreq_gov_smartass2)
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_DANCEDANCE)
 extern struct cpufreq_governor cpufreq_gov_dancedance;
 #define CPUFREQ_DEFAULT_GOVERNOR        (&cpufreq_gov_dancedance)
+#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_HYPER)
+extern struct cpufreq_governor cpufreq_gov_HYPER;
+#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_HYPER)
+#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_MINMAX)
+extern struct cpufreq_governor cpufreq_gov_minmax;
+#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_minmax)
+#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_SKYWALKER)
+extern struct cpufreq_governor cpufreq_gov_skywalker;
+#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_skywalker)
+#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_BRAZILIANWAX)
+extern struct cpufreq_governor cpufreq_gov_wrexy;
+#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_brazilianwax)
 #endif
 
 

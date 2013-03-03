@@ -18,26 +18,16 @@ obj-$(CONFIG_CPU_FREQ_GOV_LAGFREE)	 += cpufreq_lagfree.o
 obj-$(CONFIG_CPU_FREQ_GOV_LAZY)		 += cpufreq_lazy.o
 obj-$(CONFIG_CPU_FREQ_GOV_SAVAGEDZEN)	 += cpufreq_savagedzen.o
 obj-$(CONFIG_CPU_FREQ_GOV_INTELLIDEMAND) += cpufreq_intellidemand.o
-obj-$(CONFIG_CPU_FREQ_GOV_BADASS)	 += cpufreq_badass.o
-obj-$(CONFIG_CPU_FREQ_GOV_INTERACTIVEX2) += cpufreq_interactiveX2.o
-obj-$(CONFIG_CPU_FREQ_GOV_ABYSSPLUG)	 += cpufreq_abyssplug.o
-obj-$(CONFIG_CPU_FREQ_GOV_NIGHTMARE)	 += cpufreq_nightmare.o
 obj-$(CONFIG_CPU_FREQ_GOV_SCARY)	 += cpufreq_scary.o
 obj-$(CONFIG_CPU_FREQ_GOV_WHEATLEY)	 += cpufreq_wheatley.o
-obj-$(CONFIG_CPU_FREQ_GOV_SUPERBAD)	 += cpufreq_superbad.o
-obj-$(CONFIG_CPU_FREQ_GOV_ASSWAX)	 += cpufreq_asswax.o
-obj-$(CONFIG_CPU_FREQ_GOV_VIRTUOUS)	 += cpufreq_virtuous.o
-obj-$(CONFIG_CPU_FREQ_GOV_PERFORMANCE)	+= cpufreq_performance.o
-obj-$(CONFIG_CPU_FREQ_GOV_POWERSAVE)	+= cpufreq_powersave.o
-obj-$(CONFIG_CPU_FREQ_GOV_USERSPACE)	+= cpufreq_userspace.o
-obj-$(CONFIG_CPU_FREQ_GOV_ONDEMAND)	+= cpufreq_ondemand.o
-obj-$(CONFIG_CPU_FREQ_GOV_CONSERVATIVE)	+= cpufreq_conservative.o
-obj-$(CONFIG_CPU_FREQ_GOV_INTERACTIVE)	+= cpufreq_interactive.o
-obj-$(CONFIG_CPU_FREQ_GOV_WHEATLEY)     += cpufreq_wheatley.o
-obj-$(CONFIG_CPU_FREQ_GOV_LAGFREE)      += cpufreq_lagfree.o
-obj-$(CONFIG_CPU_FREQ_GOV_INTELLIDEMAND)+= cpufreq_intellidemand.o
-obj-$(CONFIG_CPU_FREQ_GOV_SMARTASS2)	+= cpufreq_smartass2.o
-obj-$(CONFIG_CPU_FREQ_GOV_DANCEDANCE)	+= cpufreq_dancedance.o
+obj-$(CONFIG_CPU_FREQ_GOV_YODA)	 	 += cpufreq_yoda.o
+obj-$(CONFIG_CPU_FREQ_GOV_KING)	 	 += cpufreq_king.o
+obj-$(CONFIG_CPU_FREQ_GOV_DANCEDANCE)	 += cpufreq_dancedance.o
+obj-$(CONFIG_CPU_FREQ_GOV_SKYWALKER)	 += cpufreq_skywalker.o
+obj-$(CONFIG_CPU_FREQ_GOV_HYPER)  	 += cpufreq_HYPER.o
+obj-$(CONFIG_CPU_FREQ_GOV_MINMAX)  	 += cpufreq_minmax.o
+obj-$(CONFIG_CPU_FREQ_GOV_BRAZILIANWAX)  += cpufreq_brazilianwax.o
+
 
 # CPUfreq cross-arch helpers
 obj-$(CONFIG_CPU_FREQ_TABLE)		 += freq_table.o
