@@ -21,10 +21,8 @@ obj-$(CONFIG_CPU_FREQ_GOV_INTELLIDEMAND) += cpufreq_intellidemand.o
 obj-$(CONFIG_CPU_FREQ_GOV_SCARY)	 += cpufreq_scary.o
 obj-$(CONFIG_CPU_FREQ_GOV_WHEATLEY)	 += cpufreq_wheatley.o
 obj-$(CONFIG_CPU_FREQ_GOV_YODA)	 	 += cpufreq_yoda.o
-obj-$(CONFIG_CPU_FREQ_GOV_KING)	 	 += cpufreq_king.o
 obj-$(CONFIG_CPU_FREQ_GOV_DANCEDANCE)	 += cpufreq_dancedance.o
 obj-$(CONFIG_CPU_FREQ_GOV_SKYWALKER)	 += cpufreq_skywalker.o
-obj-$(CONFIG_CPU_FREQ_GOV_HYPER)  	 += cpufreq_HYPER.o
 obj-$(CONFIG_CPU_FREQ_GOV_MINMAX)  	 += cpufreq_minmax.o
 obj-$(CONFIG_CPU_FREQ_GOV_BRAZILIANWAX)  += cpufreq_brazilianwax.o
 
