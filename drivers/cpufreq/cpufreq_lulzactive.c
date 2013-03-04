@@ -72,7 +72,7 @@ static struct mutex set_speed_lock;
 /*
  * The minimum amount of time to spend at a frequency before we can step up.
  */
-#define DEFAULT_UP_SAMPLE_TIME 50 * USEC_PER_MSEC
+#define DEFAULT_UP_SAMPLE_TIME 15 * USEC_PER_MSEC
 static unsigned long up_sample_time;
 
 /*
@@ -84,7 +84,7 @@ static unsigned long down_sample_time;
 /*
  * CPU freq will be increased if measured load > inc_cpu_load;
  */
-#define DEFAULT_INC_CPU_LOAD 80
+#define DEFAULT_INC_CPU_LOAD 85
 static unsigned long inc_cpu_load;
 
 /*
@@ -98,14 +98,14 @@ static unsigned long dec_cpu_load;
  * Increasing frequency table index
  * zero disables and causes to always jump straight to max frequency.
  */
-#define DEFAULT_PUMP_UP_STEP 0
+#define DEFAULT_PUMP_UP_STEP 3
 static unsigned long pump_up_step;
 
 /*
  * Decreasing frequency table index
  * zero disables and will calculate frequency according to load heuristic.
  */
-#define DEFAULT_PUMP_DOWN_STEP 0
+#define DEFAULT_PUMP_DOWN_STEP 2
 static unsigned long pump_down_step;
 
 /*
@@ -146,18 +146,18 @@ static unsigned int get_lulzfreq_table_size(struct cpufreq_lulzactive_cpuinfo *p
 
 static inline void fix_screen_off_min_step(struct cpufreq_lulzactive_cpuinfo *pcpu) {
 	if (pcpu->lulzfreq_table_size <= 0) {
-		screen_off_min_step = 0;
+		screen_off_min_step = 5;
 		return;
 	}
 	
 	if (DEFAULT_SCREEN_OFF_MIN_STEP == screen_off_min_step) 
 		for(screen_off_min_step=0;
-		pcpu->lulzfreq_table[screen_off_min_step].frequency != 486000;
+		pcpu->lulzfreq_table[screen_off_min_step].frequency != 384000;
 		screen_off_min_step++);
 	
 	if (screen_off_min_step >= pcpu->lulzfreq_table_size)
 		for(screen_off_min_step=0;
-		pcpu->lulzfreq_table[screen_off_min_step].frequency != 486000;
+		pcpu->lulzfreq_table[screen_off_min_step].frequency != 192000;
 		screen_off_min_step++);
 }
 
@@ -275,7 +275,7 @@ static void cpufreq_lulzactive_timer(unsigned long data)
 		}
 	}
 	else {		
-		if (pump_down_step) {
+		if (pump_down_step && pcpu->policy->cur < pcpu->policy->min) {
 			ret = cpufreq_frequency_table_target(
 				pcpu->policy, pcpu->lulzfreq_table,
 				pcpu->policy->cur, CPUFREQ_RELATION_H,
