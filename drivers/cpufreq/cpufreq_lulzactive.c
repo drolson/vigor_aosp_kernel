@@ -78,7 +78,7 @@ static unsigned long up_sample_time;
 /*
  * The minimum amount of time to spend at a frequency before we can step down.
  */
-#define DEFAULT_DOWN_SAMPLE_TIME 40 * USEC_PER_MSEC
+#define DEFAULT_DOWN_SAMPLE_TIME 50 * USEC_PER_MSEC
 static unsigned long down_sample_time;
 
 /*
@@ -98,14 +98,14 @@ static unsigned long dec_cpu_load;
  * Increasing frequency table index
  * zero disables and causes to always jump straight to max frequency.
  */
-#define DEFAULT_PUMP_UP_STEP 3
+#define DEFAULT_PUMP_UP_STEP 0
 static unsigned long pump_up_step;
 
 /*
  * Decreasing frequency table index
  * zero disables and will calculate frequency according to load heuristic.
  */
-#define DEFAULT_PUMP_DOWN_STEP 2
+#define DEFAULT_PUMP_DOWN_STEP 5
 static unsigned long pump_down_step;
 
 /*
@@ -146,7 +146,7 @@ static unsigned int get_lulzfreq_table_size(struct cpufreq_lulzactive_cpuinfo *p
 
 static inline void fix_screen_off_min_step(struct cpufreq_lulzactive_cpuinfo *pcpu) {
 	if (pcpu->lulzfreq_table_size <= 0) {
-		screen_off_min_step = 5;
+		screen_off_min_step = 0;
 		return;
 	}
 	
@@ -265,13 +265,16 @@ static void cpufreq_lulzactive_timer(unsigned long data)
 			
 			// apply pump_up_step by tegrak
 			index -= pump_up_step;
-			if (index < 0)
-				index = 0;
+			if (index >= pcpu->lulzfreq_table_size) {
+				index = pcpu->lulzfreq_table_size - 1;
+			}
 			
-			new_freq = pcpu->lulzfreq_table[index].frequency;
+			new_freq = (pcpu->policy->cur > pcpu->policy->max) ? 
+				(pcpu->lulzfreq_table[index].frequency) :
+				(pcpu->policy->max);
 		}
 		else {
-			new_freq = pcpu->policy->max;
+			new_freq = pcpu->policy->max * cpu_load / 100;
 		}
 	}
 	else {		
