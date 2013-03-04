@@ -72,7 +72,7 @@ static struct mutex set_speed_lock;
 /*
  * The minimum amount of time to spend at a frequency before we can step up.
  */
-#define DEFAULT_UP_SAMPLE_TIME 15 * USEC_PER_MSEC
+#define DEFAULT_UP_SAMPLE_TIME 10 * USEC_PER_MSEC
 static unsigned long up_sample_time;
 
 /*
@@ -113,7 +113,7 @@ static unsigned long pump_down_step;
  */
 static unsigned int early_suspended;
 
-#define SCREEN_OFF_LOWEST_STEP 		(0xffffffff)
+#define SCREEN_OFF_LOWEST_STEP 		(0)
 #define DEFAULT_SCREEN_OFF_MIN_STEP	(SCREEN_OFF_LOWEST_STEP)
 static unsigned long screen_off_min_step;
 
@@ -152,12 +152,12 @@ static inline void fix_screen_off_min_step(struct cpufreq_lulzactive_cpuinfo *pc
 	
 	if (DEFAULT_SCREEN_OFF_MIN_STEP == screen_off_min_step) 
 		for(screen_off_min_step=0;
-		pcpu->lulzfreq_table[screen_off_min_step].frequency != 384000;
+		pcpu->lulzfreq_table[screen_off_min_step].frequency != 0;
 		screen_off_min_step++);
 	
 	if (screen_off_min_step >= pcpu->lulzfreq_table_size)
 		for(screen_off_min_step=0;
-		pcpu->lulzfreq_table[screen_off_min_step].frequency != 192000;
+		pcpu->lulzfreq_table[screen_off_min_step].frequency != 0;
 		screen_off_min_step++);
 }
 
@@ -911,11 +911,11 @@ void start_lulzactive(void)
 		pcpu = &per_cpu(cpuinfo, 0);
 		cpufreq_frequency_table_target(
 				pcpu->policy, pcpu->lulzfreq_table,
-				500000, CPUFREQ_RELATION_H,
+				486000, CPUFREQ_RELATION_H,
 				&index500);
 		cpufreq_frequency_table_target(
 				pcpu->policy, pcpu->lulzfreq_table,
-				800000, CPUFREQ_RELATION_H,
+				810000, CPUFREQ_RELATION_H,
 				&index800);
 		for(i=index800;i<index500;i++)
 		{
