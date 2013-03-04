@@ -396,9 +396,6 @@ extern struct cpufreq_governor cpufreq_gov_badass;
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_SCARY)
 extern struct cpufreq_governor cpufreq_gov_scary;
 #define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_scary)
-#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_KING)
-extern struct cpufreq_governor cpufreq_gov_king;
-#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_king)
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_YODA)
 extern struct cpufreq_governor cpufreq_gov_yoda;
 #define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_yoda)
@@ -408,9 +405,6 @@ extern struct cpufreq_governor cpufreq_gov_smartass2;
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_DANCEDANCE)
 extern struct cpufreq_governor cpufreq_gov_dancedance;
 #define CPUFREQ_DEFAULT_GOVERNOR        (&cpufreq_gov_dancedance)
-#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_HYPER)
-extern struct cpufreq_governor cpufreq_gov_HYPER;
-#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_HYPER)
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_MINMAX)
 extern struct cpufreq_governor cpufreq_gov_minmax;
 #define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_minmax)
