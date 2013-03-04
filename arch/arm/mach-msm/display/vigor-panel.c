@@ -91,7 +91,7 @@ static void vigor_panel_power(int on)
 		}
 
 		if (vigor_get_engineerid() < VIGOR_DC_DC) {
-			ret = regulator_set_voltage(v_lcm, 3200000, 3200000);
+			ret = regulator_set_voltage(v_lcm, 3000000, 3000000);
 			if (ret) {
 				pr_err("%s: error setting %s voltage\n", __func__, lcm_str);
 				goto fail;
@@ -560,15 +560,15 @@ static struct msm_panel_common_pdata mdp_pdata = {
 };
 
 /* parameters for backlight value mapping */
-#define BACKLIGHT_MAX 255
+#define BACKLIGHT_MAX 240
 
-#define ORIG_PWM_MAX 255
-#define ORIG_PWM_DEF 143
-#define ORIG_PWM_MIN 30
+#define ORIG_PWM_MAX 240
+#define ORIG_PWM_DEF 120
+#define ORIG_PWM_MIN 20
 
-#define MAP_PWM_MAX	255
-#define MAP_PWM_DEF 	110
-#define MAP_PWM_MIN	7
+#define MAP_PWM_MAX	230
+#define MAP_PWM_DEF 	100
+#define MAP_PWM_MIN	5
 
 static unsigned char vigor_shrink_pwm(int val)
 {
