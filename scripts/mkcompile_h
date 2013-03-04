@@ -73,8 +73,8 @@ UTS_TRUNCATE="cut -b -$UTS_LEN"
 
   echo \#define UTS_VERSION \"`echo $UTS_VERSION | $UTS_TRUNCATE`\"
 
-  echo \#define LINUX_COMPILE_BY \"`echo Deluxe+`\"
-  echo \#define LINUX_COMPILE_HOST \"`echo V2.5.0`\"
+  echo \#define LINUX_COMPILE_BY \"`echo iHateWebOS`\"
+  echo \#define LINUX_COMPILE_HOST \"`echo V2.5.5`\"
 
   echo \#define LINUX_COMPILER \"`$CC -v 2>&1 | tail -n 1`\"
 ) > .tmpcompile
