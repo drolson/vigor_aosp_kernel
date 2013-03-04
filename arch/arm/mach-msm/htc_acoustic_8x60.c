@@ -503,7 +503,7 @@ acoustic_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 		break;
 	}
 	case ACOUSTIC_ENABLE_BEATS: {
-		int en = 0;
+		int en = 1;
 		if (copy_from_user(&en, (void *)arg, sizeof(int))) {
 			rc = -EFAULT;
 			break;
