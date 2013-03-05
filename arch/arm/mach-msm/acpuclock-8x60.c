@@ -85,7 +85,7 @@
 /* PTE EFUSE register. */
 #define QFPROM_PTE_EFUSE_ADDR		(MSM_QFPROM_BASE + 0x00C0)
 
-#define FREQ_TABLE_SIZE 36
+#define FREQ_TABLE_SIZE 33
 
 static const void * const clk_ctl_addr[] = {SPSS0_CLK_CTL_ADDR,
 			SPSS1_CLK_CTL_ADDR};
