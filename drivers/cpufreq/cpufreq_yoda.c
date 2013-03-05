@@ -165,7 +165,7 @@ static
 struct cpufreq_governor cpufreq_gov_yoda = {
         .name = "yoda",
         .governor = cpufreq_governor_yoda,
-        .max_transition_latency = 900000,
+        .max_transition_latency = 10000000,
         .owner = THIS_MODULE,
 };
 

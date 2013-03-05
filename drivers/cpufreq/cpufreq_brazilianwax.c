@@ -165,7 +165,7 @@ static
 struct cpufreq_governor cpufreq_gov_brazilianwax = {
         .name = "brazilianwax",
         .governor = cpufreq_governor_brazilianwax,
-        .max_transition_latency = 9000000,
+        .max_transition_latency = 10000000,
         .owner = THIS_MODULE,
 };
 
