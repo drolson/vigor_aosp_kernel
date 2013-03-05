@@ -50,9 +50,7 @@
 #include <asm/cputime.h>
 
 /******************** Tunable parameters: ********************/
-
 #define TRANSITION_LATENCY_LIMIT		(10 * 1000 * 1000)
-
 /*
  * The "ideal" frequency to use when awake. The governor will ramp up faster
  * towards the ideal frequency and slower after it has passed it. Similarly,

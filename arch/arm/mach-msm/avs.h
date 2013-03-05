@@ -15,7 +15,7 @@
 #define AVS_H
 
 #define VOLTAGE_MIN  7000 /* mV */
-#define VOLTAGE_MAX  1400
+#define VOLTAGE_MAX  1450
 #define VOLTAGE_STEP 25
 
 

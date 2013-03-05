@@ -34,6 +34,7 @@
 #include <asm/cputime.h>
 #include <linux/earlysuspend.h>
 
+#define TRANSITION_LATENCY_LIMIT		(10 * 1000 * 1000)
 static void (*pm_idle_old)(void);
 static atomic_t active_count = ATOMIC_INIT(0);
 
@@ -102,7 +103,7 @@ static unsigned int sleep_max_freq;
  * The frequency to set when waking up from sleep.
  * When sleep_max_freq=0 this will have no effect.
  */
-#define DEFAULT_SLEEP_WAKEUP_FREQ 0
+#define DEFAULT_SLEEP_WAKEUP_FREQ 9999999
 static unsigned int sleep_wakeup_freq;
 
 #define UP_THRESHOLD_FREQ 0
@@ -165,7 +166,7 @@ static
 struct cpufreq_governor cpufreq_gov_yoda = {
         .name = "yoda",
         .governor = cpufreq_governor_yoda,
-        .max_transition_latency = 10000000,
+        .max_transition_latency = TRANSITION_LATENCY_LIMIT,
         .owner = THIS_MODULE,
 };
 
