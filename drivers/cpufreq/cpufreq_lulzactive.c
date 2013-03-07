@@ -51,7 +51,7 @@ struct cpufreq_lulzactive_cpuinfo {
 	u64 freq_change_time_in_idle;
 	struct cpufreq_policy *policy;
 	struct cpufreq_frequency_table *freq_table;
-	struct cpufreq_frequency_table lulzfreq_table[32];
+	struct cpufreq_frequency_table lulzfreq_table[36];
 	unsigned int lulzfreq_table_size;
 	unsigned int target_freq;
 	int governor_enabled;
@@ -72,19 +72,19 @@ static struct mutex set_speed_lock;
 /*
  * The minimum amount of time to spend at a frequency before we can step up.
  */
-#define DEFAULT_UP_SAMPLE_TIME 20 * USEC_PER_MSEC
+#define DEFAULT_UP_SAMPLE_TIME 15 * USEC_PER_MSEC
 static unsigned long up_sample_time;
 
 /*
  * The minimum amount of time to spend at a frequency before we can step down.
  */
-#define DEFAULT_DOWN_SAMPLE_TIME 49 * USEC_PER_MSEC
+#define DEFAULT_DOWN_SAMPLE_TIME 50 * USEC_PER_MSEC
 static unsigned long down_sample_time;
 
 /*
  * CPU freq will be increased if measured load > inc_cpu_load;
  */
-#define DEFAULT_INC_CPU_LOAD 65
+#define DEFAULT_INC_CPU_LOAD 75
 static unsigned long inc_cpu_load;
 
 /*
@@ -113,12 +113,9 @@ static unsigned long pump_down_step;
  */
 static unsigned int early_suspended;
 
-#define SCREEN_OFF_LOWEST_STEP (0x2EE00)
-#define DEFAULT_SCREEN_OFF_MIN_STEP (SCREEN_OFF_LOWEST_STEP)
+#define SCREEN_OFF_LOWEST_STEP 		(0x2EE00)
+#define DEFAULT_SCREEN_OFF_MIN_STEP	(SCREEN_OFF_LOWEST_STEP)
 static unsigned long screen_off_min_step;
-
-#define DEFAULT_TIMER_RATE 30 * USEC_PER_MSEC;
-static unsigned long timer_rate;
 
 static int cpufreq_governor_lulzactive(struct cpufreq_policy *policy,
 		unsigned int event);
@@ -129,7 +126,7 @@ static
 struct cpufreq_governor cpufreq_gov_lulzactive = {
 	.name = "lulzactive",
 	.governor = cpufreq_governor_lulzactive,
-	.max_transition_latency = 9000000,
+	.max_transition_latency = 10000000,
 	.owner = THIS_MODULE,
 };
 
@@ -293,7 +290,7 @@ static void cpufreq_lulzactive_timer(unsigned long data)
 				index = pcpu->lulzfreq_table_size - 1;
 			}
 			
-			(pcpu->policy->cur == pcpu->policy->min) 
+			new_freq = (pcpu->policy->cur > pcpu->policy->min) ? 
 				(pcpu->lulzfreq_table[index].frequency) :
 				(pcpu->policy->min);
 		}
@@ -374,7 +371,7 @@ rearm:
 		pcpu->time_in_idle = get_cpu_idle_time_us(
 			data, &pcpu->idle_exit_time);
 		mod_timer(&pcpu->cpu_timer,
-			  jiffies + usecs_to_jiffies(timer_rate));
+			  jiffies + 2);
 	}
 
 exit:
@@ -409,7 +406,7 @@ static void cpufreq_lulzactive_idle_start(void)
 				smp_processor_id(), &pcpu->idle_exit_time);
 			pcpu->timer_idlecancel = 0;
 			mod_timer(&pcpu->cpu_timer,
-				  jiffies + usecs_to_jiffies(timer_rate));
+				  jiffies + 2);
 		}
 #endif
 	} else {
@@ -460,7 +457,7 @@ static void cpufreq_lulzactive_idle_end(void)
 					     &pcpu->idle_exit_time);
 		pcpu->timer_idlecancel = 0;
 		mod_timer(&pcpu->cpu_timer,
-			  jiffies + usecs_to_jiffies(timer_rate));
+			  jiffies + 2);
 	}
 
 }

@@ -864,7 +864,7 @@ static __init struct clkctl_acpu_speed *select_freq_plan(void)
 	struct clkctl_acpu_speed *f;
 
 		max_khz = 1836000;
-		acpu_freq_tbl = acpu_freq_tbl_cool;
+		acpu_freq_tbl = acpu_freq_tbl_hate;
 
 	/* Truncate the table based to max_khz. */
 	for (f = acpu_freq_tbl; f->acpuclk_khz != 0; f++) {
@@ -918,7 +918,7 @@ static int __init acpuclk_8x60_init(struct acpuclk_soc_data *soc_data)
 #else
 		for_each_online_cpu(cpu)
 			acpuclk_8x60_set_rate(cpu, 1512000, SETRATE_INIT);
-
+#endif
 	acpuclk_register(&acpuclk_8x60_data);
 	cpufreq_table_init();
 	register_hotcpu_notifier(&acpuclock_cpu_notifier);
