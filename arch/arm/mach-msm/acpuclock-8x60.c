@@ -85,6 +85,8 @@
 /* PTE EFUSE register. */
 #define QFPROM_PTE_EFUSE_ADDR		(MSM_QFPROM_BASE + 0x00C0)
 
+#define FREQ_TABLE_SIZE 36
+
 static const void * const clk_ctl_addr[] = {SPSS0_CLK_CTL_ADDR,
 			SPSS1_CLK_CTL_ADDR};
 static const void * const clk_sel_addr[] = {SPSS0_CLK_SEL_ADDR,
@@ -762,7 +764,7 @@ static void __init bus_init(void)
 }
 
 #ifdef CONFIG_CPU_FREQ_MSM
-static struct cpufreq_frequency_table freq_table[NR_CPUS][30];
+static struct cpufreq_frequency_table freq_table[NR_CPUS][FREQ_TABLE_SIZE];
 
 static void __init cpufreq_table_init(void)
 {
@@ -856,21 +858,25 @@ uint32_t acpu_check_khz_value(unsigned long khz)
 EXPORT_SYMBOL(acpu_check_khz_value);
 #endif
 
-static unsigned int __init select_freq_plan(void)
+static __init struct clkctl_acpu_speed *select_freq_plan(void)
 {
 	uint32_t max_khz;
 	struct clkctl_acpu_speed *f;
 
-	max_khz = 1836000;
-	acpu_freq_tbl = acpu_freq_tbl_hate;
+		max_khz = 1836000;
+		acpu_freq_tbl = acpu_freq_tbl_cool;
 
 	/* Truncate the table based to max_khz. */
-	for (f = acpu_freq_tbl; f->acpuclk_khz != 0; f++)
-		;
+	for (f = acpu_freq_tbl; f->acpuclk_khz != 0; f++) {
+		if (f->acpuclk_khz > max_khz) {
+			f->acpuclk_khz = 0;
+			break;
+		}
+	}
 	f--;
 	pr_info("Max ACPU freq: %u KHz\n", f->acpuclk_khz);
 
-	return f->acpuclk_khz;
+	return f;
 }
 
 static struct acpuclk_data acpuclk_8x60_data = {
@@ -906,8 +912,12 @@ static int __init acpuclk_8x60_init(struct acpuclk_soc_data *soc_data)
 	bus_init();
 
 	/* Improve boot time by ramping up CPUs immediately. */
+#ifdef CONFIG_MSM_CPU_FREQ_SET_MIN_MAX
 		for_each_online_cpu(cpu)
 			acpuclk_8x60_set_rate(cpu, CONFIG_MSM_CPU_FREQ_MAX, SETRATE_INIT);
+#else
+		for_each_online_cpu(cpu)
+			acpuclk_8x60_set_rate(cpu, 1512000, SETRATE_INIT);
 
 	acpuclk_register(&acpuclk_8x60_data);
 	cpufreq_table_init();

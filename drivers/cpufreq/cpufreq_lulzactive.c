@@ -51,7 +51,7 @@ struct cpufreq_lulzactive_cpuinfo {
 	u64 freq_change_time_in_idle;
 	struct cpufreq_policy *policy;
 	struct cpufreq_frequency_table *freq_table;
-	struct cpufreq_frequency_table lulzfreq_table[28];
+	struct cpufreq_frequency_table lulzfreq_table[32];
 	unsigned int lulzfreq_table_size;
 	unsigned int target_freq;
 	int governor_enabled;
@@ -78,13 +78,13 @@ static unsigned long up_sample_time;
 /*
  * The minimum amount of time to spend at a frequency before we can step down.
  */
-#define DEFAULT_DOWN_SAMPLE_TIME 50 * USEC_PER_MSEC
+#define DEFAULT_DOWN_SAMPLE_TIME 49 * USEC_PER_MSEC
 static unsigned long down_sample_time;
 
 /*
  * CPU freq will be increased if measured load > inc_cpu_load;
  */
-#define DEFAULT_INC_CPU_LOAD 60
+#define DEFAULT_INC_CPU_LOAD 65
 static unsigned long inc_cpu_load;
 
 /*
@@ -113,9 +113,12 @@ static unsigned long pump_down_step;
  */
 static unsigned int early_suspended;
 
-#define SCREEN_OFF_LOWEST_STEP 		(0x76A70)
-#define DEFAULT_SCREEN_OFF_MIN_STEP	(SCREEN_OFF_LOWEST_STEP)
+#define SCREEN_OFF_LOWEST_STEP (0x2EE00)
+#define DEFAULT_SCREEN_OFF_MIN_STEP (SCREEN_OFF_LOWEST_STEP)
 static unsigned long screen_off_min_step;
+
+#define DEFAULT_TIMER_RATE 30 * USEC_PER_MSEC;
+static unsigned long timer_rate;
 
 static int cpufreq_governor_lulzactive(struct cpufreq_policy *policy,
 		unsigned int event);
@@ -126,7 +129,7 @@ static
 struct cpufreq_governor cpufreq_gov_lulzactive = {
 	.name = "lulzactive",
 	.governor = cpufreq_governor_lulzactive,
-	.max_transition_latency = 10000000,
+	.max_transition_latency = 9000000,
 	.owner = THIS_MODULE,
 };
 
@@ -145,19 +148,19 @@ static unsigned int get_lulzfreq_table_size(struct cpufreq_lulzactive_cpuinfo *p
 }
 
 static inline void fix_screen_off_min_step(struct cpufreq_lulzactive_cpuinfo *pcpu) {
-	if (pcpu->lulzfreq_table_size <= 28) {
-		screen_off_min_step = 3;
+	if (pcpu->lulzfreq_table_size <= 0) {
+		screen_off_min_step = 0;
 		return;
 	}
 	
 	if (DEFAULT_SCREEN_OFF_MIN_STEP == screen_off_min_step) 
-		for(screen_off_min_step=3;
-		pcpu->lulzfreq_table[screen_off_min_step].frequency != 486000;
+		for(screen_off_min_step=0;
+		pcpu->lulzfreq_table[screen_off_min_step].frequency != 000000;
 		screen_off_min_step++);
 	
 	if (screen_off_min_step >= pcpu->lulzfreq_table_size)
-		for(screen_off_min_step=3;
-		pcpu->lulzfreq_table[screen_off_min_step].frequency != 486000;
+		for(screen_off_min_step=0;
+		pcpu->lulzfreq_table[screen_off_min_step].frequency != 000000;
 		screen_off_min_step++);
 }
 
@@ -290,7 +293,7 @@ static void cpufreq_lulzactive_timer(unsigned long data)
 				index = pcpu->lulzfreq_table_size - 1;
 			}
 			
-			new_freq = (pcpu->policy->cur > pcpu->policy->min) ? 
+			(pcpu->policy->cur == pcpu->policy->min) 
 				(pcpu->lulzfreq_table[index].frequency) :
 				(pcpu->policy->min);
 		}
@@ -371,7 +374,7 @@ rearm:
 		pcpu->time_in_idle = get_cpu_idle_time_us(
 			data, &pcpu->idle_exit_time);
 		mod_timer(&pcpu->cpu_timer,
-			  jiffies + 2);
+			  jiffies + usecs_to_jiffies(timer_rate));
 	}
 
 exit:
@@ -406,7 +409,7 @@ static void cpufreq_lulzactive_idle_start(void)
 				smp_processor_id(), &pcpu->idle_exit_time);
 			pcpu->timer_idlecancel = 0;
 			mod_timer(&pcpu->cpu_timer,
-				  jiffies + 2);
+				  jiffies + usecs_to_jiffies(timer_rate));
 		}
 #endif
 	} else {
@@ -457,7 +460,7 @@ static void cpufreq_lulzactive_idle_end(void)
 					     &pcpu->idle_exit_time);
 		pcpu->timer_idlecancel = 0;
 		mod_timer(&pcpu->cpu_timer,
-			  jiffies + 2);
+			  jiffies + usecs_to_jiffies(timer_rate));
 	}
 
 }
