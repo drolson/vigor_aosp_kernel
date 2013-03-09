@@ -3310,14 +3310,16 @@ static struct platform_device hdmi_msm_device = {
 
 static void __init msm8x60_allocate_memory_regions(void)
 {
+	void *addr;
 	unsigned long size;
 
 	size = MSM_FB_SIZE;
-	msm_fb_resources[0].start = MSM_FB_BASE;
+	
+	addr = alloc_bootmem_align(size, 0x1000);
+	msm_fb_resources[0].start = __pa(addr);
 	msm_fb_resources[0].end = msm_fb_resources[0].start + size - 1;
 	pr_info("allocating %lu bytes at %p (%lx physical) for fb\n",
-		size, __va(msm_fb_resources[0].start),
-		(unsigned long)msm_fb_resources[0].start);
+		size, addr, __pa(addr));
 }
 
 
@@ -3816,7 +3818,7 @@ static struct rpm_regulator_init_data rpm_regulator_init_data[] = {
 	RPM_LDO(PM8058_L3,  0, 1, 0, 1200000, 1200000, LDO150HMIN), /* N/A */
 	RPM_LDO(PM8058_L4,  0, 1, 0, 2850000, 2850000, LDO50HMIN),
 	RPM_LDO(PM8058_L5,  0, 1, 0, 2850000, 2850000, LDO300HMIN),
-	RPM_LDO(PM8058_L6,  0, 1, 0, 3000000, 3600000, LDO50HMIN),
+	RPM_LDO(PM8058_L6,  0, 1, 0, 3600000, 3600000, LDO50HMIN),
 	RPM_LDO(PM8058_L7,  0, 1, 0, 1800000, 1800000, LDO50HMIN),
 	RPM_LDO(PM8058_L8,  0, 1, 0, 1800000, 1800000, LDO300HMIN),
 	RPM_LDO(PM8058_L9,  0, 1, 0, 1800000, 1800000, LDO300HMIN),
