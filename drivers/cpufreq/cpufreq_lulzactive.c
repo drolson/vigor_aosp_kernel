@@ -122,7 +122,7 @@ static unsigned long pump_down_step;
  */
 static unsigned int early_suspended;
 
-#define SCREEN_OFF_LOWEST_STEP 		(0xFFFFF)
+#define SCREEN_OFF_LOWEST_STEP 		(0x2EE00)
 #define DEFAULT_SCREEN_OFF_MIN_STEP	(SCREEN_OFF_LOWEST_STEP)
 static unsigned long screen_off_min_step;
 

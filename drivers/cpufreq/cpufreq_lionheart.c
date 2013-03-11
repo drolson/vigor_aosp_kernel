@@ -34,7 +34,7 @@
 #include <linux/ktime.h>
 #include <linux/sched.h>
 
-#define DEF_FREQUENCY_UP_THRESHOLD  	(65)
+#define DEF_FREQUENCY_UP_THRESHOLD		(65)
 #define DEF_FREQUENCY_DOWN_THRESHOLD		(30)
 #define MIN_SAMPLING_RATE_RATIO			(2)
 
@@ -542,3 +542,4 @@ MODULE_LICENSE("GPL");
 
 fs_initcall(cpufreq_gov_dbs_init);
 module_exit(cpufreq_gov_dbs_exit);
+

@@ -24,7 +24,11 @@ obj-$(CONFIG_CPU_FREQ_GOV_YODA)	 	 += cpufreq_yoda.o
 obj-$(CONFIG_CPU_FREQ_GOV_DANCEDANCE)	 += cpufreq_dancedance.o
 obj-$(CONFIG_CPU_FREQ_GOV_SKYWALKER)	 += cpufreq_skywalker.o
 obj-$(CONFIG_CPU_FREQ_GOV_MINMAX)  	 += cpufreq_minmax.o
-obj-$(CONFIG_CPU_FREQ_GOV_BRAZILIANWAX)  += cpufreq_brazilianwax.o
+obj-$(CONFIG_CPU_FREQ_GOV_ASSWAX)  	 += cpufreq_asswax.o
+obj-$(CONFIG_CPU_FREQ_GOV_ADAPTIVE)	+= cpufreq_adaptive.o
+obj-$(CONFIG_CPU_FREQ_GOV_PEGASUSQ)	+= cpufreq_pegasusq.o
+obj-$(CONFIG_CPU_FREQ_GOV_NIGHTMARE)	+= cpufreq_nightmare.o
+obj-$(CONFIG_CPU_FREQ_GOV_ABYSSPLUG)	+= cpufreq_abyssplug.o
 
 
 # CPUfreq cross-arch helpers

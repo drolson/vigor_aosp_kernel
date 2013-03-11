@@ -728,7 +728,7 @@ static void free_unmap_vmap_area_addr(unsigned long addr)
 
 #define VMALLOC_PAGES		(VMALLOC_SPACE / PAGE_SIZE)
 #define VMAP_MAX_ALLOC		BITS_PER_LONG	/* 256K with 4K pages */
-#define VMAP_BBMAP_BITS_MAX	1024	/* 4MB with 4K pages */
+#define VMAP_BBMAP_BITS_MAX	3072	/* 4MB with 4K pages */
 #define VMAP_BBMAP_BITS_MIN	(VMAP_MAX_ALLOC*2)
 #define VMAP_MIN(x, y)		((x) < (y) ? (x) : (y)) /* can't use min() */
 #define VMAP_MAX(x, y)		((x) > (y) ? (x) : (y)) /* can't use max() */

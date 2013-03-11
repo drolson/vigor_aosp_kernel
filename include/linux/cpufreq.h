@@ -399,9 +399,6 @@ extern struct cpufreq_governor cpufreq_gov_scary;
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_YODA)
 extern struct cpufreq_governor cpufreq_gov_yoda;
 #define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_yoda)
-#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_SMARTASS2)
-extern struct cpufreq_governor cpufreq_gov_smartass2;
-#define CPUFREQ_DEFAULT_GOVERNOR        (&cpufreq_gov_smartass2)
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_DANCEDANCE)
 extern struct cpufreq_governor cpufreq_gov_dancedance;
 #define CPUFREQ_DEFAULT_GOVERNOR        (&cpufreq_gov_dancedance)
@@ -411,9 +408,21 @@ extern struct cpufreq_governor cpufreq_gov_minmax;
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_SKYWALKER)
 extern struct cpufreq_governor cpufreq_gov_skywalker;
 #define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_skywalker)
-#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_BRAZILIANWAX)
-extern struct cpufreq_governor cpufreq_gov_wrexy;
-#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_brazilianwax)
+#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_ASSWAX)
+extern struct cpufreq_governor cpufreq_gov_asswax;
+#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_ASSWAX)
+#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_ADAPTIVE)
+extern struct cpufreq_governor cpufreq_gov_adaptive;
+#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_adaptive)
+#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_PEGASUSQ)
+extern struct cpufreq_governor cpufreq_gov_pegasusq;
+#define CPUFREQ_DEFAULT_GOVERNOR  (&cpufreq_gov_pegasusq)
+#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_ABYSSPLUG)
+extern struct cpufreq_governor cpufreq_gov_abyssplug;
+#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_abyssplug)
+#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_NIGHTMARE)
+extern struct cpufreq_governor cpufreq_gov_nightmare;
+#define CPUFREQ_DEFAULT_GOVERNOR  (&cpufreq_gov_nightmare)
 #endif
 
 

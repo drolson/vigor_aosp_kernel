@@ -109,6 +109,12 @@ config CPU_FREQ_DEFAULT_GOV_INTERACTIVE
 	  loading your cpufreq low-level hardware driver, using the
 	  'interactive' governor for latency-sensitive workloads.
 
+config CPU_FREQ_DEFAULT_GOV_ADAPTIVE
+  	bool "adaptive"
+  	select CPU_FREQ_GOV_ADAPTIVE
+  	help
+    	  Use the CPUFreq governor 'adaptive' as default.
+
 config CPU_FREQ_DEFAULT_GOV_SMARTASS2
 	bool "smartass2"
 	select CPU_FREQ_GOV_SMARTASS2
@@ -118,6 +124,7 @@ config CPU_FREQ_DEFAULT_GOV_SMARTASS2
 config CPU_FREQ_DEFAULT_GOV_SKYWALKER
 	bool "skywalker"
 	select CPU_FREQ_GOV_SKYWALKER
+	select CPU_FREQ_GOV_PERFORMANCE
 	help
 	  Use the CPUFreq governor 'skywalker' as default.
 
@@ -130,12 +137,14 @@ config CPU_FREQ_DEFAULT_GOV_LIONHEART
 config CPU_FREQ_DEFAULT_GOV_LULZACTIVE
 	bool "lulzactive"
 	select CPU_FREQ_GOV_LULZACTIVE
+	select CPU_FREQ_GOV_PERFORMANCE
 	help
 	  Use the CPUFreq governor 'lulzactive' as default.
 
 config CPU_FREQ_DEFAULT_GOV_LAGFREE
 	bool "lagfree"
 	select CPU_FREQ_GOV_LAGFREE
+	select CPU_FREQ_GOV_PERFORMANCE
 	help
 	  Use the CPUFreq governor 'lagfree' as default. This allows
 	  you to get a full dynamic frequency capable system by simply
@@ -145,41 +154,44 @@ config CPU_FREQ_DEFAULT_GOV_LAGFREE
 	  driver. Fallback governor will be the performance governor.
 
 config CPU_FREQ_DEFAULT_GOV_YODA
- 	 bool "yoda"
-  	 select CPU_FREQ_GOV_YODA
-  	 help
+	bool "yoda"
+	select CPU_FREQ_GOV_YODA
+	select CPU_FREQ_GOV_PERFORMANCE
+	help
 	  Use the CPUFreq governor 'yoda' as default.
 
 config CPU_FREQ_DEFAULT_GOV_MINMAX
- 	 bool "minmax"
-  	 select CPU_FREQ_GOV_MINMAX
-  	 help
-	  Use the CPUFreq governor 'minmax' as default.
+	bool "minmax"
+	select CPU_FREQ_GOV_PERFORMANCE
+	help
+	   Use the CPUFreq governor 'minmax' as default.
 
-config CPU_FREQ_DEFAULT_GOV_BRAZILIANWAX
- 	 bool "brazilianwax"
-  	 select CPU_FREQ_GOV_BRAZILIANWAX
-  	 help
-	  Use the CPUFreq governor 'brazilianwax' as default.
+config CPU_FREQ_DEFAULT_GOV_ASSWAX
+	bool "asswax"
+	select CPU_FREQ_GOV_ASSWAX
+	select CPU_FREQ_GOV_PERFORMANCE
+	help
+	  Use the CPUFreq governor 'asswax' as default
 
 config CPU_FREQ_DEFAULT_GOV_LAZY
 	bool "lazy"
 	select CPU_FREQ_GOV_LAZY
 	help
-	  Use the CPUFreq governor 'lazy' as default.
+	   Use the CPUFreq governor 'lazy' as default.
 
 config CPU_FREQ_DEFAULT_GOV_SAVAGEDZEN
   	bool "savagedzen"	
 	select CPU_FREQ_GOV_SAVAGEDZEN
-	   help
-		Use the CPUFreq governor 'savagedzen' as default.
+	select CPU_FREQ_GOV_PERFORMANCE
+	help
+	  Use the CPUFreq governor 'savagedzen' as default.
 
 config CPU_FREQ_DEFAULT_GOV_INTELLIDEMAND
 	bool "intellidemand"
 	select CPU_FREQ_GOV_INTELLIDEMAND
 	help
-	  Use the CPUFreq governor 'intellidemand' as default. This is
-	  based on Ondemand with browsing detection based on GPU loading
+	   Use the CPUFreq governor 'intellidemand' as default. This is
+	   based on Ondemand with browsing detection based on GPU loading
 
 config CPU_FREQ_DEFAULT_GOV_BADASS
 	bool "badass"
@@ -199,6 +211,24 @@ config CPU_FREQ_DEFAULT_GOV_SCARY
 	select CPU_FREQ_GOV_SCARY
 	help
 	  Use the CPUFreq governor 'scary' as default.
+
+config CPU_FREQ_DEFAULT_GOV_PEGASUSQ
+  	bool "pegasusq"
+  	select CPU_FREQ_GOV_PEGASUSQ
+  	help
+    	  Use the CPUFreq governor 'pegasusq' as default.
+
+config CPU_FREQ_DEFAULT_GOV_ABYSSPLUG
+  	bool "abyssplug"
+  	select CPU_FREQ_GOV_ABYSSPLUG
+  	help
+    	  Use the CPUFreq governor 'abyssplug' as default.
+
+config CPU_FREQ_DEFAULT_GOV_NIGHTMARE
+  	bool "abyssplug"
+  	select CPU_FREQ_GOV_NIGHTMARE
+  	help
+    	  Use the CPUFreq governor 'nightmare' as default.
 
 config CPU_FREQ_DEFAULT_GOV_WHEATLEY
 	bool "wheatley"
@@ -223,8 +253,8 @@ config CPU_FREQ_GOV_DANCEDANCE
 	tristate "'dancedance' cpufreq governor"
 	depends on CPU_FREQ
 
-config CPU_FREQ_GOV_BRAZILIANWAX
-	tristate "'brazilianwax' cpufreq governor"
+config CPU_FREQ_GOV_ASSWAX
+	tristate "'asswax' cpufreq governor"
 	depends on CPU_FREQ
 
 config CPU_FREQ_GOV_SCARY
@@ -234,6 +264,18 @@ config CPU_FREQ_GOV_SCARY
 	  scary - a governor for cabbages
 
 	  If in doubt, say N.
+
+config CPU_FREQ_GOV_PEGASUSQ
+	tristate "'pegasusq' cpufreq governor"
+	depends on CPU_FREQ
+
+config CPU_FREQ_GOV_ABYSSPLUG
+	tristate "'abyssplug' cpufreq governor"
+	depends on CPU_FREQ
+
+config CPU_FREQ_GOV_NIGHTMARE
+	tristate "'nightmare' cpufreq governor"
+	depends on CPU_FREQ
 
 config CPU_FREQ_GOV_BADASS
 	tristate "'badass' cpufreq governor"
@@ -400,6 +442,10 @@ config CPU_FREQ_GOV_PERFORMANCE
 	  module will be called cpufreq_performance.
 
 	  If in doubt, say N.
+
+config CPU_FREQ_GOV_ADAPTIVE
+	tristate "'adaptive' cpufreq governor"
+	depends on CPU_FREQ
 
 config CPU_FREQ_GOV_POWERSAVE
 	tristate "'powersave' governor"
