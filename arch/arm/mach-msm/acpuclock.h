@@ -1,4 +1,4 @@
- /*
+/*
  * MSM architecture CPU clock driver header
  *
  * Copyright (C) 2007 Google, Inc.

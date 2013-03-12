@@ -227,9 +227,9 @@ void cpu_idle(void)
 #endif
 
 			/*
-			* We need to disable interrupts here
-			* to ensure we don't miss a wakeup call.
-			*/
+			 * We need to disable interrupts here
+			 * to ensure we don't miss a wakeup call.
+			 */
 			local_irq_disable();
 #ifdef CONFIG_PL310_ERRATA_769419
 			wmb();

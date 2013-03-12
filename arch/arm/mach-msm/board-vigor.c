@@ -111,7 +111,6 @@
 #include <mach/restart.h>
 #include <mach/cable_detect.h>
 #include <mach/panel_id.h>
-#include <linux/msm_tsens.h>
 
 #include "board-vigor.h"
 #include "devices.h"
@@ -477,6 +476,20 @@ static struct msm_spm_platform_data msm_spm_data[] __initdata = {
 	},
 };
 
+#ifdef CONFIG_PERFLOCK
+static unsigned vigor_perf_acpu_table[] = {
+	540000000,
+	1026000000,
+	1512000000,
+	1836000000,
+};
+
+static struct perflock_platform_data vigor_perflock_data = {
+	.perf_acpu_table = vigor_perf_acpu_table,
+	.table_size = ARRAY_SIZE(vigor_perf_acpu_table),
+};
+#endif
+
 /*
  * Consumer specific regulator names:
  *			 regulator name		consumer dev_name
@@ -492,8 +505,8 @@ static struct regulator_init_data saw_s0_init_data = {
 		.constraints = {
 			.name = "8901_s0",
 			.valid_ops_mask = REGULATOR_CHANGE_VOLTAGE,
-			.min_uV = 700000,
-			.max_uV = 1400000,
+			.min_uV = 800000,
+			.max_uV = 1350000,
 		},
 		.consumer_supplies = vreg_consumers_8901_S0,
 		.num_consumer_supplies = ARRAY_SIZE(vreg_consumers_8901_S0),
@@ -503,8 +516,8 @@ static struct regulator_init_data saw_s1_init_data = {
 		.constraints = {
 			.name = "8901_s1",
 			.valid_ops_mask = REGULATOR_CHANGE_VOLTAGE,
-			.min_uV = 700000,
-			.max_uV = 1400000,
+			.min_uV = 800000,
+			.max_uV = 1350000,
 		},
 		.consumer_supplies = vreg_consumers_8901_S1,
 		.num_consumer_supplies = ARRAY_SIZE(vreg_consumers_8901_S1),
@@ -3310,16 +3323,14 @@ static struct platform_device hdmi_msm_device = {
 
 static void __init msm8x60_allocate_memory_regions(void)
 {
-	void *addr;
 	unsigned long size;
 
 	size = MSM_FB_SIZE;
-	
-	addr = alloc_bootmem_align(size, 0x1000);
-	msm_fb_resources[0].start = __pa(addr);
+	msm_fb_resources[0].start = MSM_FB_BASE;
 	msm_fb_resources[0].end = msm_fb_resources[0].start + size - 1;
 	pr_info("allocating %lu bytes at %p (%lx physical) for fb\n",
-		size, addr, __pa(addr));
+		size, __va(msm_fb_resources[0].start),
+		(unsigned long)msm_fb_resources[0].start);
 }
 
 
@@ -3805,8 +3816,8 @@ static struct regulator_consumer_supply vreg_consumers_PM8901_S4_PC[] = {
 /* RPM early regulator constraints */
 static struct rpm_regulator_init_data rpm_regulator_early_init_data[] = {
 	/*	 ID	   a_on pd ss min_uV   max_uV   init_ip	freq */
-	RPM_SMPS(PM8058_S0, 0, 1, 1,  500000, 1400000, SMPS_HMIN, 1p92),
-	RPM_SMPS(PM8058_S1, 0, 1, 1,  500000, 1400000, SMPS_HMIN, 1p92),
+	RPM_SMPS(PM8058_S0, 0, 1, 1,  500000, 1350000, SMPS_HMIN, 1p92),
+	RPM_SMPS(PM8058_S1, 0, 1, 1,  500000, 1350000, SMPS_HMIN, 1p92),
 };
 
 /* RPM regulator constraints */
@@ -3818,7 +3829,7 @@ static struct rpm_regulator_init_data rpm_regulator_init_data[] = {
 	RPM_LDO(PM8058_L3,  0, 1, 0, 1200000, 1200000, LDO150HMIN), /* N/A */
 	RPM_LDO(PM8058_L4,  0, 1, 0, 2850000, 2850000, LDO50HMIN),
 	RPM_LDO(PM8058_L5,  0, 1, 0, 2850000, 2850000, LDO300HMIN),
-	RPM_LDO(PM8058_L6,  0, 1, 0, 3600000, 3600000, LDO50HMIN),
+	RPM_LDO(PM8058_L6,  0, 1, 0, 3000000, 3600000, LDO50HMIN),
 	RPM_LDO(PM8058_L7,  0, 1, 0, 1800000, 1800000, LDO50HMIN),
 	RPM_LDO(PM8058_L8,  0, 1, 0, 1800000, 1800000, LDO300HMIN),
 	RPM_LDO(PM8058_L9,  0, 1, 0, 1800000, 1800000, LDO300HMIN),
@@ -3929,11 +3940,9 @@ static struct platform_device *early_devices[] __initdata = {
 	&msm_device_dmov_adm1,
 };
 
-static struct tsens_platform_data pyr_tsens_pdata = {
-                .tsens_factor 			= 1000,
-                .hw_type                = MSM_8660,
-                .tsens_num_sensor       = 6,
-                .slope                  = 702,
+static struct platform_device msm_tsens_device = {
+	.name   = "tsens-tm",
+	.id = -1,
 };
 
 #if defined(CONFIG_GPIO_SX150X) || defined(CONFIG_GPIO_SX150X_MODULE)
@@ -7608,6 +7617,7 @@ static struct platform_device *vigor_devices[] __initdata = {
 	&msm_device_rng,
 #endif
 
+	&msm_tsens_device,
 	&msm_rpm_device,
 
 #ifdef CONFIG_BATTERY_MSM8X60
@@ -7808,8 +7818,6 @@ static void __init msm8x60_init(struct msm_board_data *board_data)
 	struct kobject *properties_kobj;
 	struct regulator *margin_power;
 
-	msm_tsens_early_init(&pyr_tsens_pdata);
-
 	/*
 	 * Initialize RPM first as other drivers and devices may need
 	 * it for their initialization.
@@ -7885,6 +7893,10 @@ static void __init msm8x60_init(struct msm_board_data *board_data)
 	platform_add_devices(early_devices, ARRAY_SIZE(early_devices));
 	/* CPU frequency control is not supported on simulated targets. */
 	acpuclk_init(&acpuclk_8x60_soc_data);
+
+#ifdef CONFIG_PERFLOCK
+	perflock_init(&vigor_perflock_data);
+#endif
 
 #ifdef CONFIG_CPU_FREQ_GOV_ONDEMAND_2_PHASE
 	set_two_phase_freq(1134000);

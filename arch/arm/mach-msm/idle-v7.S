@@ -51,10 +51,10 @@ ENTRY(msm_pm_collapse)
 	ands	r1, r1, #15		/* What CPU am I */
 	addne	r0, r0, #CPU_SAVED_STATE_SIZE
 #else
-	ldr  r1, =0        /* single cpu, set current cpu to 0. */
+	ldr	r1, =0				/* single cpu, set current cpu to 0. */
 #endif
-	ldr  r2, =cur_cpu
-	str  r1, [r2]      /* store current cpu number for later use. */
+	ldr	r2, =cur_cpu
+	str	r1, [r2]			/* store current cpu number for later use. */
 #if defined(CONFIG_THUMB2_KERNEL)
 	stmia   r0!, {r4-r11}
 #else
@@ -301,7 +301,7 @@ saved_state:
 saved_state_end:
 
 cur_cpu:
-	.space  4 /* store current cpu number */
+	.space	4 /* store current cpu number */
 msm_pm_boot_vector:
 	.space  4 * NR_CPUS
 

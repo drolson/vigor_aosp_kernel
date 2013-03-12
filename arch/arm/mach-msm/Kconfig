@@ -247,6 +247,32 @@ config PERFLOCK_BOOT_LOCK
         default n
         bool "Boot Time Performance Lock"
 
+config PERFLOCK_SCREEN_POLICY
+        depends on PERFLOCK
+        depends on ARCH_MSM8960 || ARCH_MSM8X60 || ARCH_QSD8X50 || ARCH_MSM7X00A || ARCH_MSM7X27A || ARCH_MSM7X25
+        default n
+        bool "Change Cpufreq Policy while Screen ON/OFF"
+
+config PERFLOCK_SCREEN_ON_MIN
+        depends on PERFLOCK_SCREEN_POLICY
+        int "Minimum speed while screen on"
+        default MSM_CPU_FREQ_ONDEMAND_MIN
+
+config PERFLOCK_SCREEN_ON_MAX
+        depends on PERFLOCK_SCREEN_POLICY
+        int "Maximum speed while screen on"
+        default MSM_CPU_FREQ_ONDEMAND_MAX
+
+config PERFLOCK_SCREEN_OFF_MIN
+        depends on PERFLOCK_SCREEN_POLICY
+        int "Minimum speed while screen off"
+        default MSM_CPU_FREQ_ONDEMAND_MIN
+
+config PERFLOCK_SCREEN_OFF_MAX
+        depends on PERFLOCK_SCREEN_POLICY
+        int "Maximum speed while screen off"
+        default MSM_CPU_FREQ_ONDEMAND_MIN
+
 menu "MSM Board Selection"
 
 config MACH_HALIBUT
@@ -1496,6 +1522,14 @@ config MSM_DALRPC_TEST
 	  Exercises DAL RPC calls to QDSP6.
 
 config MSM_MPDEC
+	bool "Enable kernel based mpdecision"
+	depends on MSM_SMP
+	default n
+	help
+	  This enables kernel based multi core control.
+	  (up/down hotplug based on load)
+
+config MSM_MPDEC
     bool "Enable kernel based mpdecision"
     depends on MSM_SMP
     default n
@@ -1503,9 +1537,35 @@ config MSM_MPDEC
       This enables kernel based multi core control.
       (up/down hotplug based on load)
 
+choice
+    prompt "Default MPdecision setting"
+    help
+      This option sets the MPdecision startup settings.
+      If in doubt, select 'enabled'.
+
+config MSM_MPDEC_ENABLED
+    bool "enabled"
+    depends on MSM_MPDEC
+    help
+      Build MPdecision into kernel with full control over
+      multi processor decisions by default.
+
+config MSM_MPDEC_DISABLED
+    bool "disabled"
+    depends on MSM_MPDEC
+    help
+      Build MPdecision into kernel with only control over
+      screen on/off multi processor decisions by default.
+
+endchoice
+
+config GPU_OVERCLOCK
+	bool "Enable GPU OverClock option"
+	default y
+
 config CPU_VOLTAGE_TABLE
-    bool "Enable CPU Voltage Table via sysfs for adjustements"
-    default n
+  	bool "Enable CPU Voltage Table via sysfs for adjustements"
+  	default n
 
 if CPU_FREQ_MSM
 

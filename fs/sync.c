@@ -25,10 +25,6 @@
 extern bool early_suspend_active;
 #endif
 
-#ifdef CONFIG_FSYNC_CONTROL
-extern bool fsynccontrol_fsync_enabled(void);
-#endif
-
 /*
  * Do the filesystem syncing work. For simple filesystems
  * writeback_inodes_sb(sb) just dirties buffers with inodes so we have to
@@ -240,11 +236,6 @@ SYSCALL_DEFINE1(fsync, unsigned int, fd)
 		return 0;
 	else
 #endif
-#ifdef CONFIG_FSYNC_CONTROL
-	if (!fsynccontrol_fsync_enabled())
-		return 0;
-#endif
-
 	return do_fsync(fd, 0);
 }
 
@@ -254,10 +245,6 @@ SYSCALL_DEFINE1(fdatasync, unsigned int, fd)
 	if (!early_suspend_active)
 		return 0;
 	else
-#endif
-#ifdef CONFIG_FSYNC_CONTROL
-	if (!fsynccontrol_fsync_enabled())
-		return 0;
 #endif
 	return do_fsync(fd, 1);
 }

@@ -70,7 +70,7 @@ static spinlock_t down_cpumask_lock;
 static struct mutex set_speed_lock;
 
 /* Hi speed to bump to from lo speed when load burst (default max) */
-static u64 hispeed_freq;
+static u64 hispeed_freq = 1188000;
 
 /*
  * The minimum amount of time to spend at a frequency before we can step up.

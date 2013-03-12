@@ -46,8 +46,8 @@
 #include <mach/debug_mm.h>
 #include <linux/fs.h>
 
-#define MAX_BUF 4
-#define BUFSZ (655360)
+#define MAX_BUF 3
+#define BUFSZ (524288)
 
 #define AUDDEC_DEC_PCM 0
 #define Q6_EFFECT_DEBUG 0
@@ -1402,7 +1402,7 @@ static int audio_open(struct inode *inode, struct file *file)
 	audio->out_sample_rate = 44100;
 	audio->out_channel_mode = 2;
 	audio->out_bits = 16;
-	audio->volume = 0x2328;
+	audio->volume = 0x2000;
 
 	file->private_data = audio;
 	audio->opened = 1;

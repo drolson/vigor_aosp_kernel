@@ -64,20 +64,9 @@ void kgsl_pwrctrl_pwrlevel_change(struct kgsl_device *device,
 		new_level >= pwr->thermal_pwrlevel &&
 		new_level != pwr->active_pwrlevel) {
 		struct kgsl_pwrlevel *pwrlevel = &pwr->pwrlevels[new_level];
-		int diff = new_level - pwr->active_pwrlevel;
-		int d = (diff > 0) ? 1 : -1;
-		int level = pwr->active_pwrlevel;
 		pwr->active_pwrlevel = new_level;
 		if ((test_bit(KGSL_PWRFLAGS_CLK_ON, &pwr->power_flags)) ||
 			(device->state == KGSL_STATE_NAP)) {
-			/* Don't shift by more than one level at a time to
-			 * avoid glitches.
-			 */
-			while (level != new_level) {
-				level += d;
-				clk_set_rate(pwr->grp_clks[0],
-					pwr->pwrlevels[level].gpu_freq);
-			}
 			/*
 			 * On some platforms, instability is caused on
 			 * changing clock freq when the core is busy.
@@ -137,7 +126,7 @@ static int __gpuclk_store(int max, struct device *dev,
 	if (pwr->pwrlevels[pwr->active_pwrlevel].gpu_freq >
 	    pwr->pwrlevels[pwr->thermal_pwrlevel].gpu_freq)
 		kgsl_pwrctrl_pwrlevel_change(device, pwr->thermal_pwrlevel);
-	else if (!max || (NULL == device->pwrscale.policy))
+	else if (!max)
 		kgsl_pwrctrl_pwrlevel_change(device, i);
 
 done:

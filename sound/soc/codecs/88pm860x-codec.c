@@ -522,7 +522,7 @@ static const struct soc_enum pm860x_spk_ear_opamp_enum =
 static const struct snd_kcontrol_new pm860x_snd_controls[] = {
 	SOC_DOUBLE_R_TLV("ADC Capture Volume", PM860X_ADC_ANA_2,
 			PM860X_ADC_ANA_3, 6, 3, 0, adc_tlv),
-	SOC_DOUBLE_TLV("AUX Capture Volume", PM860X_ADC_ANA_3, 0, 3, 10, 0,
+	SOC_DOUBLE_TLV("AUX Capture Volume", PM860X_ADC_ANA_3, 0, 3, 7, 0,
 			aux_tlv),
 	SOC_SINGLE_TLV("MIC1 Capture Volume", PM860X_ADC_ANA_2, 0, 7, 0,
 			mic_tlv),

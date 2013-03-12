@@ -14,7 +14,7 @@
  */
 #ifndef _ARCH_ARM_MACH_MSM_HTC_ACOUSTIC_8X60_H_
 #define _ARCH_ARM_MACH_MSM_HTC_ACOUSTIC_8X60_H_
-#define PROPERTY_VALUE_MAX  100
+#define PROPERTY_VALUE_MAX  92
 
 struct acoustic_tables {
 	char aic3254[PROPERTY_VALUE_MAX];

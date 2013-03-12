@@ -700,8 +700,6 @@ static int msm_otg_reset(struct otg_transceiver *otg)
 	USBH_INFO("%s\n", __func__);
 #ifdef CONFIG_FORCE_FAST_CHARGE
 	USB_porttype_detected = NO_USB_DETECTED; /* No USB plugged, clear fast charge detected port value */
-	is_fast_charge_forced = FAST_CHARGE_NOT_FORCED; /* No fast charge can be forced then... */
-	current_charge_mode = CURRENT_CHARGE_MODE_DISCHARGING; /* ... and we are now on battery */
 #endif
 	clk_enable(motg->clk);
 	if (motg->pdata->phy_reset)
